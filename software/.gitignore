@@ -1,0 +1,10 @@
+*~
+*.o
+*.elf
+*.map
+*.lst
+*.sec
+*.cnt
+*.txt
+*.bin
+*.vhd
