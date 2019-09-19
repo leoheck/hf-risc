@@ -10,7 +10,7 @@ union big{
 };
 
 int main(){
-	int32_t i, j;
+	int32_t i;
 	uint64_t a, b;
 	int64_t c, d;
 	union big stuff;
