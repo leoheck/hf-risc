@@ -4,80 +4,80 @@
 float testfloat_add(float min, float max, float step)
 {
 	float i, s = 0.0;
-	
+
 	for (i = min; i < max; i += step)
 		s += step;
-	
+
 	return s;
 }
 
 fixed_t testfixed_add(fixed_t min, fixed_t max, fixed_t step)
 {
 	fixed_t i, s = fix_val(0.0);
-	
+
 	for (i = min; i < max; i += step)
 		s += step;
-	
+
 	return s;
 }
 
 float testfloat_sub(float min, float max, float step)
 {
 	float i, s = 0.0;
-	
+
 	for (i = max; i >= min; i -= step)
 		s -= step;
-	
+
 	return s;
 }
 
 fixed_t testfixed_sub(fixed_t min, fixed_t max, fixed_t step)
 {
 	fixed_t i, s = fix_val(0.0);
-	
+
 	for (i = max; i >= min; i -= step)
 		s -= step;
-	
+
 	return s;
 }
 
 float testfloat_mul(float min, float max, float step)
 {
 	float i, s = max;
-	
+
 	for (i = min; i < max; i += step)
 		s *= 1.000001;
-	
+
 	return s;
 }
 
 fixed_t testfixed_mul(fixed_t min, fixed_t max, fixed_t step)
 {
 	fixed_t i, s = max;
-	
+
 	for (i = min; i < max; i += step)
 		s = fix_mul(s, fix_val(1.000001));
-	
+
 	return s;
 }
 
 float testfloat_div(float min, float max, float step)
 {
 	float i, s = max;
-	
+
 	for (i = min; i < max; i += step)
 		s /= 1.000001;
-	
+
 	return s;
 }
 
 fixed_t testfixed_div(fixed_t min, fixed_t max, fixed_t step)
 {
 	fixed_t i, s = max;
-	
+
 	for (i = min; i < max; i += step)
 		s = fix_div(s, fix_val(1.000001));
-	
+
 	return s;
 }
 
@@ -94,9 +94,9 @@ int main()
 	fixed_t vfx;
 	uint32_t cycles;
 	int8_t buf[20];
-	
+
 	printf("\nfloat / fixed point speed test\n");
-	
+
 	cycles = TIMER0;
 	vfl = testfloat_add(minfl, maxfl, stepfl);
 	cycles = TIMER0 - cycles;
@@ -108,7 +108,7 @@ int main()
 	cycles = TIMER0 - cycles;
 	fixtoa(vfx, buf, 6);
 	printf("fixed add: %d cycles - %s\n", cycles, buf);
-	
+
 	cycles = TIMER0;
 	vfl = testfloat_sub(minfl, maxfl, stepfl);
 	cycles = TIMER0 - cycles;

@@ -44,7 +44,7 @@ void blit(unsigned long saddr, unsigned long daddr, unsigned long n)
 	}
       x = *d & (0xffffffff << (32 - n + d1));
       *d = y | x;
-    } 
+    }
   else if (soff < doff)
     {
       d1 = doff - soff;
@@ -59,7 +59,7 @@ void blit(unsigned long saddr, unsigned long daddr, unsigned long n)
 	}
       x = *d & (0xffffffff << (32 - n + d1));
       *d = y | (x >> d1);
-    } 
+    }
   else
     {
       if (soff)
@@ -86,7 +86,7 @@ int main()
   if (dst[0] != 291 || dst[4] != 1164411171 || dst[10] != 1080066048)
     {
       puts("blit: failed\n");
-    } 
+    }
   else
     {
       puts("blit: success\n");

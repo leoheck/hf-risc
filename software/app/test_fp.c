@@ -3,16 +3,16 @@
 
 float epsilon(void){
 	float x = 1.0f;
-	
+
 	while ((1.0f + (x / 2.0f)) > 1.0f)
 		x = x / 2.0f;
-		
+
 	return x;
 }
 
 void doit(float a, float x){
 	char buf[30], buf2[30];
-	
+
 	ftoa(a, buf, 6); ftoa(x, buf2, 6);				printf("\n\na = %s, x = %s\n", buf , buf2);
 	ftoa(x, buf, 6);						printf("\nx                                            = %s", buf);
 	ftoa((a + x) - a, buf, 6);					printf("\n(a + x) - a                                  = %s", buf);

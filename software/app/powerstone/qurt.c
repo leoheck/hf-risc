@@ -14,7 +14,7 @@ int qurt(double a[], double x1[], double x2[])
       x2[0] = (-a[1] - w2) / w1;
       x2[1] = 0.0;
       return (0);
-    } 
+    }
   else if(d == 0.0)
     {
       x1[0] = -a[1] / w1;
@@ -22,7 +22,7 @@ int qurt(double a[], double x1[], double x2[])
       x2[0] = x1[0];
       x2[1] = 0.0;
       return (0);
-    } 
+    }
   else
     {
       w2 /= w1;
@@ -55,7 +55,7 @@ int main()
   if(result != -1776094907)
     {
       puts("qurt: fail\n");
-    } 
+    }
   else
     {
       puts("qurt: success\n");

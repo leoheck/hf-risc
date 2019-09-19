@@ -50,7 +50,7 @@ void main(void){
 	printf("\n\nrandom elements: ");
 	for(i=0; i<ELEMENTS; i++)
 		printf("%d ", v[i]);
-	
+
 	time = TIMER0;
 	sort(v, ELEMENTS);
 	time = TIMER0 - time;
@@ -65,7 +65,7 @@ void main(void){
 	printf("\n\nrandom elements: ");
 	for(i=0; i<ELEMENTS; i++)
 		printf("%d ", v[i]);
-	
+
 	time = TIMER0;
 	qsort(v, 0, ELEMENTS-1);
 	time = TIMER0 - time;

@@ -2,7 +2,7 @@ ENTRY(_entry)
 
 /* specify HF-RISC memory areas */
 
-MEMORY 
+MEMORY
 {
 rom		: ORIGIN = 0x00000000, LENGTH = 256M	/* ROM area*/
 ram		: ORIGIN = 0x40000000, LENGTH = 256M	/* RAM area. */
@@ -15,7 +15,7 @@ _stack = 0x4ffffffc;
 
 /* now define the output sections  */
 
-SECTIONS 
+SECTIONS
 {
 	. = 0;
 

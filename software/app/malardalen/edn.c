@@ -77,7 +77,7 @@ fir(const short array1[], const short coeff[], long int output[])
 
 /****************************************************
 *	FIR Filter with Redundant Load Elimination
-						
+
 By doing two outer loops simultaneously, you can potentially  reuse data (depending on the DSP architecture).
 x and h  only  need to be loaded once, therefore reducing redundant loads.
 This reduces memory bandwidth and power.
@@ -165,11 +165,11 @@ codebook(long int mask, long int bitchanged, long int numbasis, long int codewor
 
 
 
-/*		
+/*
  * The following code is removed since it gave a memory access exception.
  * It is OK since the return value does not control the flow.
  * The loop always iterates a fixed number of times independent of the loop body.
- 
+
     if (theta == !(!(codeword & tmpMask)))
 			g += *(d + bitchanged * ddim + j);
 		else
@@ -293,6 +293,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

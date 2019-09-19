@@ -85,7 +85,7 @@ double sqrt(double val) {
   flag = 0;
   if( val == 0 ) {
     x = 0;
-  }  
+  }
   else {
     for(i=1; i<20; i++) {
       if( !flag ) {
@@ -94,7 +94,7 @@ double sqrt(double val) {
 	diff = val - (x*x);
 	if( fabs(diff) <= min_tol ) flag = 1;
       }
-      else 
+      else
 	x =x;
     }
   }
@@ -119,16 +119,16 @@ void puti(int x) {
     x = -x;
     buf[i++] = '-';
   }
-  buf[i] = '0' + ((x / 1000000000) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 100000000) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 10000000) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 1000000) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 100000) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 10000) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 1000) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 100) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x / 10) % 10); if( j || buf[i] != '0' ) j=i+=1; 
-  buf[i] = '0' + ((x    ) % 10); j= i + 1; 
+  buf[i] = '0' + ((x / 1000000000) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 100000000) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 10000000) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 1000000) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 100000) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 10000) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 1000) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 100) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x / 10) % 10); if( j || buf[i] != '0' ) j=i+=1;
+  buf[i] = '0' + ((x    ) % 10); j= i + 1;
   buf[j] = 0;
   puts(buf);
 }

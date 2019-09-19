@@ -9,8 +9,8 @@ Classification: U//FOUO
 	Based on axtls implementation, by Cameron Rich. Improvements made mostly
 	to cbc handling, reducing unnecessary copying and intermediary buffers.
 	Added code to generate both Rijndael S-box lookups in memory. Reduced
-	Round constants to ones actally used. mul2 from Dr. Gladman. I've only 
-	personally tested this on little Endian machines, but it might 
+	Round constants to ones actally used. mul2 from Dr. Gladman. I've only
+	personally tested this on little Endian machines, but it might
 	*possibly* work on a big endian platform.
 ****************************************************************************/
 
@@ -46,7 +46,7 @@ static uint8_t aes_sbox[256];		/** AES S-box  */
 static uint8_t aes_isbox[256];	/** AES iS-box */
 
 /** AES round constants */
-static const uint8_t Rcon[]= 
+static const uint8_t Rcon[]=
 {
 	0x01,0x02,0x04,0x08,0x10,0x20,
 	0x40,0x80,0x1b,0x36,0x6c,0xd8
@@ -154,7 +154,7 @@ void AES_cbc_encrypt(AES_CTX *ctx, const uint8_t *msg, uint8_t *out, int length)
 	AES_hncpy32(buf,(uint32_t *)(ctx->iv));
 	for (length -= AES_BLOCKSIZE; length >= 0; length -= AES_BLOCKSIZE)
 	{
-	
+
 		buf[0] = ntohl(((uint32_t *)msg)[0])^buf[0];
 		buf[1] = ntohl(((uint32_t *)msg)[1])^buf[1];
 		buf[2] = ntohl(((uint32_t *)msg)[2])^buf[2];
@@ -163,7 +163,7 @@ void AES_cbc_encrypt(AES_CTX *ctx, const uint8_t *msg, uint8_t *out, int length)
 		AES_encrypt(ctx, buf);
 
 		AES_hncpy32((uint32_t *)out,buf);
-		
+
 		msg += AES_BLOCKSIZE;
 		out += AES_BLOCKSIZE;
     }
@@ -204,7 +204,7 @@ static void AES_encrypt(const AES_CTX *ctx, uint32_t *data)
     uint32_t tmp[4];
     uint32_t tmp1, old_a0, a0, a1, a2, a3, row;
     int curr_rnd;
-    int rounds = ctx->rounds; 
+    int rounds = ctx->rounds;
     const uint32_t *k = ctx->ks;
 
     /* Pre-round key addition */
@@ -219,7 +219,7 @@ static void AES_encrypt(const AES_CTX *ctx, uint32_t *data)
         {
             a0 = (uint32_t)aes_sbox[(data[row%4]>>24)&0xFF];
             a1 = (uint32_t)aes_sbox[(data[(row+1)%4]>>16)&0xFF];
-            a2 = (uint32_t)aes_sbox[(data[(row+2)%4]>>8)&0xFF]; 
+            a2 = (uint32_t)aes_sbox[(data[(row+2)%4]>>8)&0xFF];
             a3 = (uint32_t)aes_sbox[(data[(row+3)%4])&0xFF];
 
             /* Perform MixColumn iff not last round */
@@ -237,7 +237,7 @@ static void AES_encrypt(const AES_CTX *ctx, uint32_t *data)
         }
 
         /* KeyAddition - note that it is vital that this loop is separate from
-           the MixColumn operation, which must be atomic...*/ 
+           the MixColumn operation, which must be atomic...*/
         for (row = 0; row < 4; row++)
             data[row] = tmp[row] ^ *(k++);
     }
@@ -245,7 +245,7 @@ static void AES_encrypt(const AES_CTX *ctx, uint32_t *data)
 
 /** Decrypt a single block (16 bytes) of data */
 static void AES_decrypt(const AES_CTX *ctx, uint32_t *data)
-{ 
+{
     uint32_t tmp[4];
     uint32_t xt0,xt1,xt2,xt3,xt4,xt5,xt6;
     uint32_t a0, a1, a2, a3, row;
@@ -272,7 +272,7 @@ static void AES_decrypt(const AES_CTX *ctx, uint32_t *data)
 			if (curr_rnd<(rounds-1))
 			{
 				/* The MDS cofefficients (0x09, 0x0B, 0x0D, 0x0E)
-					are quite large compared to encryption; this 
+					are quite large compared to encryption; this
 					operation slows decryption down noticeably. */
 				xt0 = AES_xtime(a0^a1);
 				xt1 = AES_xtime(a1^a2);
@@ -328,7 +328,7 @@ static AES_display(uint8_t * data, size_t len)
 	{
 		printf("%02x",(uint8_t)data[i]);
 	}
-	
+
 }
 
 
@@ -366,7 +366,7 @@ int main(void)
 	printf("\nIV:\t\t");	AES_display(iv,sizeof(iv));
 
 	AES_cbc_encrypt(&ctx, nistData, crypt, AES_BLOCKSIZE * 4);
-		
+
 	printf("\nPlainText: \t"); AES_display(nistData,20);
 	printf("\nCypherText: \t"); AES_display(crypt,20);
 
@@ -384,7 +384,7 @@ int main(void)
 	printf("\nIV:\t\t");	AES_display(iv,sizeof(iv));
 
 	AES_cbc_encrypt(&ctx, nistData, crypt, AES_BLOCKSIZE * 4);
-		
+
 	printf("\nPlainText: \t"); AES_display(nistData,20);
 	printf("\nCypherText: \t"); AES_display(crypt,20);
 

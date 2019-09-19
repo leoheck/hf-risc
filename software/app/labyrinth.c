@@ -4,7 +4,7 @@
 void show(int *m, int lin, int col)
 {
 	int i, j;
-	
+
 	for (i = 0; i < lin; i++) {
 		for (j = 0; j < col; j++) {
 			printf("%3d ", m[i * col + j]);
@@ -17,7 +17,7 @@ void show(int *m, int lin, int col)
 void mark(int *m, int l, int c, int lin, int col)
 {
 	int h, i, j, k = 1;
-	
+
 	for (h = 0; h < lin * col; h++, k++) {
 		for (i = 0; i < lin; i++) {
 			for (j = 0; j < col; j++) {
@@ -47,7 +47,7 @@ void mark(int *m, int l, int c, int lin, int col)
 int search(int *m, int i, int j, int ei, int ej, int lin, int col)
 {
 	int k = 2;
-	
+
 	while (k > 1) {
 		k = m[i * col + j];
 		printf("[%d,%d] ", i, j);
@@ -94,7 +94,7 @@ int main(void)
 {
 	struct maze_s *m;
 	int i, s, k = 0;
-	
+
 	for (i = 0; i < sizeof(mazes) / sizeof(struct maze_s); i++) {
 		m = &mazes[i];
 		s = solve(m->maze, m->lines, m->columns, m->start_line, m->start_col, m->end_line, m->end_col);
@@ -106,6 +106,6 @@ int main(void)
 		};
 	};
 	printf("\nsummary: %d of %d solved\n", k, i);
-	
+
 	return 0;
 }

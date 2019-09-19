@@ -186,7 +186,7 @@ unsigned long int *sync_find(register unsigned long int *dptr)
 	      sample1 = sample2 >> bit_cnt;
 	      sync_window = 19;
 	      break;
-	    } 
+	    }
 	  else
 	    {
 	      sample1 = (sample1 << 1) |
@@ -246,7 +246,7 @@ int num_proc(register int i, register unsigned long int codeword)
             msg[i] = digit + 0x30;
 	  else
             msg[i] = digit;
-	} 
+	}
       else
 	msg[i] = 0x80;
       shift = shift + 4;
@@ -317,7 +317,7 @@ int msg_proc(register unsigned long int *dptr)
 		num_bad_sync++;
 	    }
 	  word_count = 0;
-	} 
+	}
       else
 	{
 	  if (addr_search_mode)
@@ -330,7 +330,7 @@ int msg_proc(register unsigned long int *dptr)
 		      addr_search_mode = 0;
 		    }
 		}
-	    } 
+	    }
 	  else
 	    {
 	      data = err_corr(data);
@@ -482,7 +482,7 @@ int main()
       if (!j)
 	{
 	  dptr = numeric_data;
-	} 
+	}
       else
 	{
 	  dptr = alpha_data;
@@ -492,16 +492,16 @@ int main()
 	  msg_length = msg_proc(sync_find(dptr));
 	  if (func == 0)
 	    {
-	    } 
+	    }
 	  else if (func == 3)
 	    {
-	    } 
+	    }
 	  else
 	    {
 	      puts("pocsag: failed\n");
 	      return 0;
 	    }
-	} 
+	}
       else
 	{
 	  puts("pocsag: failed\n");
@@ -512,7 +512,7 @@ int main()
       msg_length == 88)
     {
       puts("pocsag: success\n");
-    } 
+    }
   else
     {
       puts("pocsag: failed\n");

@@ -17,7 +17,7 @@
  * Changes:
  * JG 2005/12/20: Changed declaration of maxmaxcode to avoid warning
  * JG 2012/09/28: Comment within comment removed
- */ 
+ */
 
 /* #define DO_TRACING */
 
@@ -219,7 +219,7 @@ int _main(void)
    OutBuff = (unsigned char *)comp_text_buffer;
 
    compress();
-   
+
    return (0);
 
 }
@@ -531,6 +531,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

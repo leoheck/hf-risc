@@ -19,7 +19,7 @@ typedef enum
 } AES_MODE;
 
 /** @brief This structure holds the AES key context */
-typedef struct aes_key_st 
+typedef struct aes_key_st
 {
     uint16_t rounds;                    /**< @brief # of rounds - based on keysize */
     uint16_t key_size;                  /**< @brief keysize int bits */
@@ -55,7 +55,7 @@ AES_cbc_encrypt
 
     Performs CBC encryption on the msg buffer, output needs to be a valid
     allocated memory location of approporaite length. The output buffer can
-    be the same as the input buffer in which the data will be directly 
+    be the same as the input buffer in which the data will be directly
     encrypted.
 
     @param[in]  ctx     Initialized AES context structure
@@ -73,7 +73,7 @@ AES_cbc_decrypt
 
     Performs CBC decryption on the msg buffer, output needs to be a valid
     allocated memory location of approporaite length. The output buffer can
-    be the same as the input buffer in which the data will be directly 
+    be the same as the input buffer in which the data will be directly
     decrypted.
 
     @param[in]  ctx     Initialized AES context structure

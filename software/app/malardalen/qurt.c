@@ -54,7 +54,7 @@
 
 /*
 ** Benchmark Suite for Real-Time Applications, by Sung-Soo Lim
-**     
+**
 **    III-7. qurt.c : the root computation of a quadratic equation
 **                 (from the book C Programming for EEs by Hyun Soon Ahn)
 */
@@ -180,6 +180,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 
