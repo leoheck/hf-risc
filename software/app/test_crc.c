@@ -83,28 +83,28 @@ uint32_t xz_crc32(const uint8_t *buf, uint32_t size, uint32_t crc)
 }
 
 void main(void){
-	uint8_t *str = "123456789";
+	uint8_t *str = (uint8_t *) "123456789";
 	int32_t time;
 	uint16_t crc1;
 	uint32_t crc2;
 	uint64_t crc3;
 
 	time = TIMER0;
-	crc1 = crc16(str, strlen(str));
+	crc1 = crc16(str, strlen((int8_t *)str));
 	time = TIMER0 - time;
 	printf("crc16: %8x, %d cycles\n", crc1, time);
 	time = TIMER0;
-	crc2 = crc32(str, strlen(str));
+	crc2 = crc32(str, strlen((int8_t *)str));
 	time = TIMER0 - time;
 	printf("crc32: %8x, %d cycles\n", crc2, time);
 	time = TIMER0;
-	crc3 = crc64(str, strlen(str));
+	crc3 = crc64(str, strlen((int8_t *)str));
 	time = TIMER0 - time;
 	printf("crc64: %8x%8x, %d cycles\n", (uint32_t)(crc3 >> 32), (uint32_t)(crc3 & 0xffffffff), time);
 
 	xz_crc32_init();
 	time = TIMER0;
-	crc2 = xz_crc32(str, strlen(str), 0);
+	crc2 = xz_crc32(str, strlen((int8_t *)str), 0);
 	time = TIMER0 - time;
 	printf("crc32 (table): %8x, %d cycles\n", crc2, time);
 

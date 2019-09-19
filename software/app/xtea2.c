@@ -44,7 +44,7 @@ void xtea_decrypt(uint32_t v[2], const uint32_t key[4], uint32_t num_rounds)
 void xtea_cbc_encrypt(uint8_t *out, uint8_t *in, uint32_t len, const uint32_t key[4], const uint32_t iv[2])
 {
 	uint32_t i, rem, block[2], tiv[2];
-	
+
 	rem = len % BLOCKLEN;
 	tiv[0] = iv[0];
 	tiv[1] = iv[1];
@@ -72,7 +72,7 @@ void xtea_cbc_encrypt(uint8_t *out, uint8_t *in, uint32_t len, const uint32_t ke
 void xtea_cbc_decrypt(uint8_t *out, uint8_t *in, uint32_t len, const uint32_t key[4], const uint32_t iv[2])
 {
 	uint32_t i, rem, block[2], block2[2], tiv[2];
-	
+
 	rem = len % BLOCKLEN;
 	tiv[0] = iv[0];
 	tiv[1] = iv[1];
@@ -105,15 +105,15 @@ int main(void){
 	uint8_t message[] = "the quick brown fox jumps over the lazy dog";
 	uint32_t xtea_key[4] = {0xf0e1d2c3, 0xb4a59687, 0x78695a4b, 0x3c2d1e0f};
 	uint32_t iv[2] = {0x11223344, 0x55667788};
-	
+
 	printf("\nmessage:");
-	hexdump(message, sizeof(message));
+	hexdump((int8_t*) message, sizeof(message));
 	xtea_cbc_encrypt(message, message, sizeof(message), xtea_key, iv);
 	printf("\nencoded message:");
-	hexdump(message, sizeof(message));
+	hexdump((int8_t*) message, sizeof(message));
 	xtea_cbc_decrypt(message, message, sizeof(message), xtea_key, iv);
 	printf("\ndecoded message:");
-	hexdump(message, sizeof(message));
-	
+	hexdump((int8_t*) message, sizeof(message));
+
 	return 0;
 }
