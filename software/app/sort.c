@@ -2,7 +2,7 @@
 
 #define ELEMENTS	128
 
-int sort(int v[], int e){
+void sort(int v[], int e){
 	int i, j, k;
 
 	for(i=0; i<e-1; i++){
@@ -39,9 +39,9 @@ void qsort(int v[], int left, int right){
 	qsort(v, last+1, right);
 }
 
-int main(void){
+void main(void){
 	int v[ELEMENTS];
-	int i,j;
+	int i;
 	volatile unsigned int time;
 
 	for(i=0; i<ELEMENTS; i++)
@@ -74,4 +74,3 @@ int main(void){
 	for(i=0; i<ELEMENTS; i++)
 		printf("%d ", v[i]);
 }
-
