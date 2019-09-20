@@ -3,16 +3,18 @@
 
 int main(void) {
 
-	printf("--1st MAC operation\n");
+	uint32_t steps, i;
+	steps = 16;
 
-	ASYNC_MAC_OPER = 0x000a000a;
-	printf("INT_MAC_OPER: %08x\n", ASYNC_MAC_OPER);
-	printf("INT_MAC_RESULT: %08x\n", ASYNC_MAC_RESULT);
-	printf("--2nd MAC operation\n");
-
-	ASYNC_MAC_OPER = 0x00020004;
-	printf("INT_MAC_OPER: %08x\n", ASYNC_MAC_OPER);
-	printf("INT_MAC_RESULT: %08x\n", ASYNC_MAC_RESULT);
+	for (i = 0; i < steps; i++) {
+		printf("DE configuration: %d\n", i);
+		DE_PAUSE ^= -1;
+		DE_CONFIG ^= -1;
+		DE_CDE_SEL ^= -1;
+		DE_CDE_CTRL ^= -1;
+		DE_MDE_SEL ^= -1;
+		delay_ms(100);
+	}
 
 	return 0;
 }
