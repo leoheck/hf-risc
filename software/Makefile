@@ -1,40 +1,31 @@
 # architecture: mips or riscv
-# CROSS_COMPILE=mips
-
+# ARCH = mips
 ARCH = riscv
-CROSS_COMPILE = riscv32-unknown-elf-
 
-# board specific parameters
-BAUDRATE=57600
-F_CLK=25000000
-SERIAL_DEV=/dev/ttyUSB0
+BAUDRATE = 57600
+F_CLK = 25000000
+SERIAL_DEV = /dev/ttyUSB0
 
 # compiler flags
 CFLAGS_STRIP = -fdata-sections -ffunction-sections
 LDFLAGS_STRIP = --gc-sections
 LD_SCRIPT = hf-risc.ld
 
-# CFLAGS_NO_HW_MULDIV = -mnohwmult -mnohwdiv -ffixed-lo -ffixed-hi
-# GCROSS_COMPILE_mips = mips-elf-gcc -Wall -O2 -c -mips2 -mno-branch-likely -mpatfree -mfix-r4000 -mno-check-zero-division -msoft-float -ffreestanding -nostdlib -fomit-frame-pointer -G 0 -I ./include -DCPU_SPEED=${F_CLK} -DBIG_ENDIAN $(CFLAGS_NO_HW_MULDIV) $(CFLAGS_STRIP) -DDEBUG_PORT
-# AS_mips = mips-elf-as -mips1 -msoft-float
-# LD_mips = mips-elf-ld -mips1 $(LDFLAGS_STRIP)
-# DUMP_mips = mips-elf-objdump
-# READ_mips = mips-elf-readelf
-# OBJ_mips = mips-elf-objcopy
-# SIZE_mips = mips-elf-size
-
-# GCROSS_COMPILE_riscv = riscv32-unknown-elf-gcc -march=rv32i -mabi=ilp32 -Wall -Os -c -mstrict-align -ffreestanding -nostdlib -ffixed-s10 -ffixed-s11 -I ./include -DCPU_SPEED=${F_CLK} -DLITTLE_ENDIAN $(CFLAGS_STRIP) -DDEBUG_PORT #-ffixed-s10 -ffixed-s11 -mno-div -mrvc -fPIC -DDEBUG_PORT
-# AS_riscv = riscv32-unknown-elf-as -march=rv32i -mabi=ilp32 #-fPIC
-# LD_riscv = riscv32-unknown-elf-ld -melf32lriscv $(LDFLAGS_STRIP)
-# DUMP_riscv = riscv32-unknown-elf-objdump -Mno-aliases
-# READ_riscv = riscv32-unknown-elf-readelf
-# OBJ_riscv = riscv32-unknown-elf-objcopy
-# SIZE_riscv = riscv32-unknown-elf-size
-
-CFLAGS = -mabi=ilp32 -Wall -Os -c -mstrict-align -ffreestanding -nostdlib -ffixed-s10 -ffixed-s11 -I ./include -DCPU_SPEED=${F_CLK} -DLITTLE_ENDIAN $(CFLAGS_STRIP) -DDEBUG_PORT
+ifeq (riscv, riscv)
+CROSS_COMPILE = riscv32-unknown-elf-
+CFLAGS = -march=rv32i -mabi=ilp32 -Wall -Os -c -mstrict-align -ffreestanding -nostdlib -ffixed-s10 -ffixed-s11 -I ./include -DCPU_SPEED=${F_CLK} -DLITTLE_ENDIAN $(CFLAGS_STRIP) -DDEBUG_PORT #-ffixed-s10 -ffixed-s11 -mno-div -mrvc -fPIC -DDEBUG_PORT
 AS_FLAGS = -march=rv32i -mabi=ilp32 #-fPIC
 LD_FLAGS = -melf32lriscv $(LDFLAGS_STRIP)
 DUMP_FLAGS = -Mno-aliases
+else
+CROSS_COMPILE = mips-elf-
+CFLAGS_NO_HW_MULDIV = -mnohwmult -mnohwdiv -ffixed-lo -ffixed-hi
+GCROSS_COMPILE_mips = -Wall -O2 -c -mips2 -mno-branch-likely -mpatfree -mfix-r4000 -mno-check-zero-division -msoft-float -ffreestanding -nostdlib -fomit-frame-pointer -G 0 -I ./include -DCPU_SPEED=${F_CLK} -DBIG_ENDIAN $(CFLAGS_NO_HW_MULDIV) $(CFLAGS_STRIP) -DDEBUG_PORT
+AS_mips = -mips1 -msoft-float
+LD_mips = -mips1 $(LDFLAGS_STRIP)
+endif
+
+.DEFAULT_GOAL := all
 
 
 tools:
@@ -59,22 +50,21 @@ tools:
 
 #======
 
-crt_o = crt0.o libc.o interrupt.o math.o malloc.o
-extra_o = spi.o mcp23s17.o
+crt_o = build/crt0.o build/libc.o build/interrupt.o build/math.o build/malloc.o
+extra_o = build/spi.o build/mcp23s17.o
 
 crt: $(crt_o)
 
-
 extra: $(extra_o)
 
+build/crt0.o: ./lib/$(ARCH)/crt0.s
+	@ echo "Building $@ $(ARCH)"
+	@ mkdir -p build/
+	$(CROSS_COMPILE)as $(AS_FLAGS) -o $@ $^
 
-crt0.o: lib/$(ARCH)/crt0.s
+build/%.o: ./lib/%.c
 	@ echo "Building $@"
-	@ $(CROSS_COMPILE)as $(AS_FLAGS) -o crt0.o lib/$(ARCH)/crt0.s
-
-
-%.o: lib/%.c
-	@ echo "Building $@"
+	@ mkdir -p build/
 	@ $(CROSS_COMPILE)gcc $(CFLAGS) -o $@ $^
 
 #========
@@ -129,9 +119,11 @@ crt0.o: lib/$(ARCH)/crt0.s
 
 # ====
 
-apps_c = $(shell find ./app -maxdepth 1 -name "*.c")
-apps_o = $(subst ./app/,,$(apps_c:.c=.o))
+apps_c = app/labyrinth.c app/euler.c app/sort.c app/test_trig.c app/pi.c app/malloc_test.c app/ann.c app/xtea2.c app/ann2.c app/hello.c app/float_fixed.c app/xtea.c app/euler_fixed.c app/base64.c app/peripherals_test.c app/test64.c app/mem_test.c app/hanoi.c app/test.c app/fib.c app/core_test.c app/encode.c app/sudoku.c app/test_fp.c app/xtea_hw.c app/newton.c app/test_fixed.c app/interrupt_test.c app/test_crc.c
 apps_dir = $(shell find ./app -mindepth 1 -maxdepth 1 -type d)
+# apps_c = $(shell find ./app -maxdepth 1 -name "*.c")
+
+apps_o = $(subst app/,build/,$(apps_c:.c=.o))
 
 apps = $(apps_o:.o=)
 
@@ -147,22 +139,21 @@ lsd:
 lsapp:
 	@ echo "$(apps_o)" | tr " " "\n"
 
+all: crt $(apps_o)
 
-# all: crt $(apps_o)
-# all: xtea_hw_vec.o exp_io.o test_spi.o
-all: crt labyrinth.o euler.o sort.o test_trig.o pi.o malloc_test.o ann.o xtea2.o ann2.o hello.o float_fixed.o xtea.o euler_fixed.o base64.o peripherals_test.o test64.o mem_test.o hanoi.o test.o fib.o core_test.o encode.o sudoku.o test_fp.o xtea_hw.o newton.o test_fixed.o interrupt_test.o test_crc.o
-
-
-%.o: app/%.c
+build/%.o: app/%.c
 	@ echo "Building $@"
 	@ $(CROSS_COMPILE)gcc $(CFLAGS) -o $@ $^
-	@ $(CROSS_COMPILE)ld $(LD_FLAGS) -Tlib/$(ARCH)/$(LD_SCRIPT) -Map code.map -N -o code.elf $(crt_o) $@
-	@ $(CROSS_COMPILE)objdump $(DUMP_FLAGS) --disassemble --reloc code.elf > code.lst
-	@ $(CROSS_COMPILE)objdump $(DUMP_FLAGS) -h code.elf > code.sec
-	@ $(CROSS_COMPILE)objdump $(DUMP_FLAGS) -s code.elf > code.cnt
-	@ $(CROSS_COMPILE)objcopy -O binary code.elf code.bin
-	@ $(CROSS_COMPILE)size code.elf | sed "s/code.elf/$@/g" | tee $(@:.o=.size)
-	@ hexdump -v -e '4/1 "%02x" "\n"' code.bin > code.txt
+	@ mkdir -p $(@:.o=)
+	@ $(CROSS_COMPILE)ld $(LD_FLAGS) -T./lib/$(ARCH)/$(LD_SCRIPT) -Map $(@:.o=)/code.map -N -o $(@:.o=)/code.elf $(crt_o) $@
+	@ $(CROSS_COMPILE)objdump --disassemble --reloc $(@:.o=)/code.elf > $(@:.o=)/code.lst
+	@ $(CROSS_COMPILE)objdump -h $(@:.o=)/code.elf > $(@:.o=)/code.sec
+	@ $(CROSS_COMPILE)objdump -s $(@:.o=)/code.elf > $(@:.o=)/code.cnt
+	@ $(CROSS_COMPILE)objcopy -O binary $(@:.o=)/code.elf $(@:.o=)/code.bin
+	$(CROSS_COMPILE)size $(@:.o=)/code.elf | sed "s|build/.*/code.elf|$(basename $(notdir $@))|g" | tee $(@:.o=.size)
+	@ hexdump -v -e '4/1 "%02x" "\n"' $(@:.o=)/code.bin > $(@:.o=)/code.txt
+
+
 
 
 
@@ -176,7 +167,7 @@ all: crt labyrinth.o euler.o sort.o test_trig.o pi.o malloc_test.o ann.o xtea2.o
 # 	$(CROSS_COMPILE)gcc $(CFLAGS) -o coremark.o app/coremark/coremark.c
 # 	# @ $(MAKE) --no-print-directory link
 
-# exp_io.o: $(crt_o) spi.o mcp23s17.o
+# exp_io.o: $(crt_o) spi.o bom mcp23s17.o
 # 	@ $(CROSS_COMPILE)gcc $(CFLAGS) -o $@ $^
 # 	@ $(CROSS_COMPILE)ld $(LD_FLAGS) -Tlib/$(ARCH)/$(LD_SCRIPT) -Map code.map -N -o code.elf $^ $@
 # 	@ $(CROSS_COMPILE)objdump $(DUMP_FLAGS) --disassemble --reloc code.elf > code.lst
@@ -222,12 +213,10 @@ all: crt labyrinth.o euler.o sort.o test_trig.o pi.o malloc_test.o ann.o xtea2.o
 
 
 clean:
-	-rm -rf *~ *.o *.elf *.map *.lst *.sec *.cnt *.txt *.bin *.size
+	rm -rf build
 	-rm -rf *.vhd
+	-rm -rf *~
 	-rm -rf app/*~
-	-rm -rf boot/*~
-	-rm -rf include/*~
-	-rm -rf lib/*~
 
 info:
-	@ cat *.size | sort | uniq | sed "s/\.o//g" | tac
+	@ find -name "*.size" -printf "cat %p\n" | sh | sort | uniq | tac
