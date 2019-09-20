@@ -1,64 +1,54 @@
-# architecture: mips or riscv
-ARCH=riscv
 
-# board specific parameters
-BAUDRATE=57600
-F_CLK=25000000
-SERIAL_DEV=/dev/ttyUSB0
+## ONLY FOR ASSOC
 
-# compiler flags
+ARCH = riscv
+CROSS_COMPILE = riscv32-unknown-elf-
+
+CLK_FREQ = 25000000
+
 CFLAGS_STRIP = -fdata-sections -ffunction-sections
 LDFLAGS_STRIP = --gc-sections
 LD_SCRIPT = hf-risc.ld
 
-GCC_riscv = riscv32-unknown-elf-gcc -march=rv32i -mabi=ilp32 -Wall -O2 -c -mstrict-align -ffreestanding -nostdlib -ffixed-s10 -ffixed-s11 -I ../../include -DCPU_SPEED=${F_CLK} -DLITTLE_ENDIAN $(CFLAGS_STRIP) -DDEBUG_PORT #-ffixed-s10 -ffixed-s11 -mno-div -mrvc -fPIC -DDEBUG_PORT
-AS_riscv = riscv32-unknown-elf-as -march=rv32i -mabi=ilp32 #-fPIC
-LD_riscv = riscv32-unknown-elf-ld -melf32lriscv $(LDFLAGS_STRIP)
-DUMP_riscv = riscv32-unknown-elf-objdump -Mno-aliases
-READ_riscv = riscv32-unknown-elf-readelf
-OBJ_riscv = riscv32-unknown-elf-objcopy
-SIZE_riscv = riscv32-unknown-elf-size
+CFLAGS = -march=rv32i -mabi=ilp32 -Wall -Os -c -mstrict-align -ffreestanding -nostdlib \
+	-ffixed-s10 -ffixed-s11 -I ../../include \
+	-DCPU_SPEED=$(CLK_FREQ) -DLITTLE_ENDIAN $(CFLAGS_STRIP) -DDEBUG_PORT
 
-all:
+AS_FLAGS = -march=rv32i -mabi=ilp32 #-fPIC
+LD_FLAGS = -melf32lriscv $(LDFLAGS_STRIP)
+DUMP_FLAGS = -Mno-aliases
 
-serial:
-	stty ${BAUDRATE} raw cs8 -parenb -crtscts clocal cread ignpar ignbrk -ixon -ixoff -ixany -brkint -icrnl -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke -F ${SERIAL_DEV}
+srcs = $(shell find -name "*.c")
+objs = $(addprefix build/,$(srcs:.c=.o))
 
-load: serial
-	cp code.bin ${SERIAL_DEV}
+all: crt $(objs)
 
-debug: serial
-	cat ${SERIAL_DEV}
+crt_o = build/crt0.o build/libc.o build/interrupt.o build/math.o build/malloc.o
 
-crt:
-	$(AS_$(ARCH)) -o crt0.o ../../lib/$(ARCH)/crt0.s
-	$(GCC_$(ARCH)) -o libc.o ../../lib/libc.c
-	$(GCC_$(ARCH)) -o interrupt.o ../../lib/interrupt.c
-	$(GCC_$(ARCH)) -o math.o ../../lib/math.c
-	$(GCC_$(ARCH)) -o malloc.o ../../lib/malloc.c
+crt: $(crt_o)
 
-link:
-	$(LD_$(ARCH)) -T../../lib/$(ARCH)/$(LD_SCRIPT) -Map test.map -N -o test.elf *.o
-	$(DUMP_$(ARCH)) --disassemble --reloc test.elf > test.lst
-	$(DUMP_$(ARCH)) -h test.elf > test.sec
-	$(DUMP_$(ARCH)) -s test.elf > test.cnt
-	$(OBJ_$(ARCH)) -O binary test.elf test.bin
-	$(SIZE_$(ARCH)) test.elf
-	mv test.elf code.elf
-	mv test.bin code.bin
-	mv test.lst code.lst
-	mv test.sec code.sec
-	mv test.cnt code.cnt
-	mv test.map code.map
-	hexdump -v -e '4/1 "%02x" "\n"' code.bin > code.txt
+build/crt0.o: ../../lib/$(ARCH)/crt0.s
+	@ echo "Building $@"
+	@ mkdir -p build/
+	@ $(CROSS_COMPILE)as $(AS_FLAGS) -o $@ $^
 
-assoc_test: crt
-	$(GCC_$(ARCH)) -o assoc_test.o assoc_test.c
-	@$(MAKE) --no-print-directory link
+build/%.o: ../../lib/%.c
+	@ echo "Building $@"
+	@ mkdir -p build/
+	@ $(CROSS_COMPILE)gcc $(CFLAGS) -o $@ $^
+
+build/%.o: %.c
+	@ echo "Building $@"
+	@ $(CROSS_COMPILE)gcc $(CFLAGS) -o $@ $^
+	@ mkdir -p $(@:.o=)
+	@ $(CROSS_COMPILE)ld $(LD_FLAGS) -T../../lib/$(ARCH)/$(LD_SCRIPT) -Map $(@:.o=)/code.map -N -o $(@:.o=)/code.elf $(crt_o) $@
+	@ $(CROSS_COMPILE)objdump --disassemble --reloc $(@:.o=)/code.elf > $(@:.o=)/code.lst
+	@ $(CROSS_COMPILE)objdump -h $(@:.o=)/code.elf > $(@:.o=)/code.sec
+	@ $(CROSS_COMPILE)objdump -s $(@:.o=)/code.elf > $(@:.o=)/code.cnt
+	@ $(CROSS_COMPILE)objcopy -O binary $(@:.o=)/code.elf $(@:.o=)/code.bin
+	@ $(CROSS_COMPILE)size $(@:.o=)/code.elf
+	@ hexdump -v -e '4/1 "%02x" "\n"' $(@:.o=)/code.bin > $(@:.o=)/code.txt
 
 clean:
-	-rm -rf *~ *.o *.elf *.map *.lst *.sec *.cnt *.txt *.bin *.vhd
-	-rm -rf app/*~
-	-rm -rf boot/*~
-	-rm -rf include/*~
-	-rm -rf lib/*~
+	rm -rf *~
+	rm -rf build
