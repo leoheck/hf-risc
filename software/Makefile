@@ -31,7 +31,7 @@ endif
 tools:
 	@ which $(CROSS_COMPILE)gcc
 	@ which $(CROSS_COMPILE)as
-	@ which $(CROSS_COMPILE)ld
+	@ which $(CROSS_COMPILE)LD_mips
 	@ which $(CROSS_COMPILE)objdump
 	@ which $(CROSS_COMPILE)readelf
 	@ which $(CROSS_COMPILE)objcopy
@@ -136,21 +136,22 @@ lso:
 lsd:
 	@ echo "$(apps_dir)" | tr " " "\n" | nl
 
-lsapp:
-	@ echo "$(apps_o)" | tr " " "\n"
 
 all: crt $(apps_o)
+
+build/exp_io.o: crt app/%.o
+	@ make -s extra_objs="build/spi.o build/mcp23s17.o" $@
 
 build/%.o: app/%.c
 	@ echo "Building $@"
 	@ $(CROSS_COMPILE)gcc $(CFLAGS) -o $@ $^
 	@ mkdir -p $(@:.o=)
-	@ $(CROSS_COMPILE)ld $(LD_FLAGS) -T./lib/$(ARCH)/$(LD_SCRIPT) -Map $(@:.o=)/code.map -N -o $(@:.o=)/code.elf $(crt_o) $@
+	@ $(CROSS_COMPILE)ld $(LD_FLAGS) -T./lib/$(ARCH)/$(LD_SCRIPT) -Map $(@:.o=)/code.map -N -o $(@:.o=)/code.elf $(crt_o) $(extra_objs) $@
 	@ $(CROSS_COMPILE)objdump --disassemble --reloc $(@:.o=)/code.elf > $(@:.o=)/code.lst
 	@ $(CROSS_COMPILE)objdump -h $(@:.o=)/code.elf > $(@:.o=)/code.sec
 	@ $(CROSS_COMPILE)objdump -s $(@:.o=)/code.elf > $(@:.o=)/code.cnt
 	@ $(CROSS_COMPILE)objcopy -O binary $(@:.o=)/code.elf $(@:.o=)/code.bin
-	$(CROSS_COMPILE)size $(@:.o=)/code.elf | sed "s|build/.*/code.elf|$(basename $(notdir $@))|g" | tee $(@:.o=.size)
+	@ $(CROSS_COMPILE)size $(@:.o=)/code.elf | sed "s|build/.*/code.elf|$(basename $(notdir $@))|g" | tee $(@:.o=.size)
 	@ hexdump -v -e '4/1 "%02x" "\n"' $(@:.o=)/code.bin > $(@:.o=)/code.txt
 
 
@@ -167,7 +168,7 @@ build/%.o: app/%.c
 # 	$(CROSS_COMPILE)gcc $(CFLAGS) -o coremark.o app/coremark/coremark.c
 # 	# @ $(MAKE) --no-print-directory link
 
-# exp_io.o: $(crt_o) spi.o bom mcp23s17.o
+# exp_io.o: $(crt_o) spi.o mcp23s17.o
 # 	@ $(CROSS_COMPILE)gcc $(CFLAGS) -o $@ $^
 # 	@ $(CROSS_COMPILE)ld $(LD_FLAGS) -Tlib/$(ARCH)/$(LD_SCRIPT) -Map code.map -N -o code.elf $^ $@
 # 	@ $(CROSS_COMPILE)objdump $(DUMP_FLAGS) --disassemble --reloc code.elf > code.lst
