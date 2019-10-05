@@ -50,7 +50,7 @@ begin
 
 	left <= '1' when alu_op(1) = '0' else '0';
 	logical <= '1' when alu_op(1 downto 0) /= "11" else '0';
-	
+
 	barrel_shifter: entity work.bshift
 	port map(	left => left,
 			logical => logical,
@@ -62,7 +62,7 @@ begin
 	mul_trg <= '1' when alu_op >= "1100" and mul_rdy = '1' and mul_rdy2 = '1' else '0';
 	mul_sig <= '1' when alu_op(1) = '0' else '0';
 	alu_wait <= mul_trg or mul_hold or not mul_rdy;
-	
+
 	process(clock, reset)
 	begin
 		if reset = '1' then
@@ -73,7 +73,7 @@ begin
 			mul_rdy2 <= mul_rdy;
 		end if;
 	end process;
-	
+
 	multiplier: entity work.mul
 	port map(	clock => clock,
 			reset => reset,

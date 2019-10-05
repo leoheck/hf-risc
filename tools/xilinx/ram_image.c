@@ -1,4 +1,4 @@
-/* ram_image.c by Steve Rhoads 11/7/05 
+/* ram_image.c by Steve Rhoads 11/7/05
  * This program take the ram_xilinx.vhd file as input
  * and the code.txt file as input.
  * It then creates ram_image.vhd as output with the

@@ -82,7 +82,7 @@ begin
 			end if;
 		end if;
 	end process;
-	
+
 	pc_plus4 <=	pc + 4;
 
 	pc_next <=	irq_vector when (irq = '1' and irq_ack_s = '1') or except = '1' else
@@ -97,7 +97,7 @@ begin
 	irq_ack <= irq_ack_s_dly;
 
 	exception <= '1' when except = '1' else '0';
-	
+
 	stall_sig <= stall or alu_wait;
 
 	process(clock, reset, irq, irq_ack_s, mem_to_reg_r, mwait, stall_sig)

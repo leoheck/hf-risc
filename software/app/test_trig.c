@@ -7,7 +7,7 @@ int main() {
 	float radians;
 	int i;
 	char buf[30];
-	
+
 
 	for (i = 0; i < sizeof(degrees) / sizeof(float); i++){
 		radians = degrees[i] * pi / 180;

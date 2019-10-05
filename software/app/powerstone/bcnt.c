@@ -74,7 +74,7 @@ main()
   if (t != 0x202)
     {
       puts("bcnt: failed\n");
-    } 
+    }
   else
     {
       puts("bcnt: success\n");

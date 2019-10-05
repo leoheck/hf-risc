@@ -44,7 +44,7 @@ static void itoa2(long n, char *s, int base, long *digits){
 		n2/=base;
 		number[j]=i<10?'0'+i:'a'+i-10;
 		if(n2==0&&15-j>=*digits) break;
-	} 
+	}
 	if(sign==-1){
 		number[--j]='-';
 	}
@@ -65,7 +65,7 @@ void print(long num,long base,long digits){
 		putchar(*ptr++);
 		if(ptr[-1]=='\n') *--ptr='\r';
 	}
-}              
+}
 
 void print_hex(unsigned long num){
 	long i;
@@ -143,7 +143,7 @@ int main(void)
 		}
 		putchar('\n');
 		putchar('\n');
-  
+
 		//test multiply and divide
 		j=7;
 		for(i=0;i<=10;++i){
@@ -189,7 +189,7 @@ int main(void)
 		}
 		putchar('\n');
 		putchar('\n');
-  
+
 		//test bit operations
 		i=0x1234;
 		j=0x4321;
@@ -206,7 +206,7 @@ int main(void)
 		print_hex(i-0x12);
 		putchar('\n');
 		putchar('\n');
-  
+
 		//test memory access
 		for(i=0;i<10;++i){
 			char_buf[i]=i;
@@ -225,7 +225,7 @@ int main(void)
 			putchar('\n');
 		}
 		putchar('\n');
-   
+
 		prime();
 
 		printf("\ninterrupts -> compare: %d counter: %d\n\n", cmpcount, ccount);

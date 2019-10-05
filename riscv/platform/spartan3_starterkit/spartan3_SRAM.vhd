@@ -126,7 +126,7 @@ begin
 		data_out_cpu => data_out_cpu,
 		data_w_cpu => data_w_cpu,
 		data_access_cpu => data_access_cpu,
-		
+
 		addr_mem => address,
 		data_read_mem => data_read,
 		data_write_mem => data_write,
@@ -138,7 +138,7 @@ begin
 	);
 
 	-- instruction and data memory (boot RAM)
-	boot_ram: entity work.ram 
+	boot_ram: entity work.ram
 	generic map (memory_type => "DEFAULT")
 	port map (
 		clk			=> clock,
@@ -158,7 +158,7 @@ begin
 	ram_address <= address(31 downto 2);
 	ram_we_n <= we_n_reg;
 
-	ram_control:   
+	ram_control:
 	process(clock, ram_enable_n, data_we, data_write)
 	begin
 		if ram_enable_n = '0' then			--SRAM

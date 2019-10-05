@@ -3,29 +3,29 @@
 void setup_uart(void)
 {
 	uint16_t d;
-	
+
 	d = (uint16_t)(CPU_SPEED / 57600);
 	UART0DIV = d;
 	UART0 = 0;
 
 	PADDR |= MASK_P2;
 	PADDR &= ~MASK_P3;
-	PAALTCFG0 |= MASK_UART0;	
+	PAALTCFG0 |= MASK_UART0;
 }
 
 void boot_eeprom(void)
 {
 	volatile uint32_t *eeprom;
 	void (*fptr)();
-/*	
- 	eeprom = (uint32_t *)EXT_EEPROM;	
+/*
+ 	eeprom = (uint32_t *)EXT_EEPROM;
 	fptr = (void (*)(void *))(EXT_EEPROM);
 	if (eeprom[0xe0 >> 2] == ntohl(0xb16b00b5))
 		fptr((void *)0);
 */
 	volatile uint32_t *sram;
 	sram = (uint32_t *)RAM_BASE;
-	eeprom = (uint32_t *)EXT_EEPROM;	
+	eeprom = (uint32_t *)EXT_EEPROM;
 	fptr = (void (*)(void *))(RAM_BASE);
 	if (eeprom[0xe0 >> 2] == ntohl(0xb16b00b5)) {
 		memcpy((void *)sram, (void *)eeprom, 7936);
@@ -42,7 +42,7 @@ void boot_loop(void)
 	volatile uint32_t *eeprom, *ptr3;
 	uint8_t *wren;
 	int8_t buf[80];
-	
+
 	ptr = (int8_t *)RAM_BASE;
 	fptr = (void (*)(void *))(RAM_BASE);
 
@@ -167,7 +167,7 @@ void boot_loop(void)
 		default:
 			break;
 		}
-	}	
+	}
 }
 
 int main(void){

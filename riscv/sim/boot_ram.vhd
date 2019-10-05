@@ -27,7 +27,7 @@ signal ram1 : ram := (others => (others => '0'));
 
 begin
 	process(clk)
-		variable data : std_logic_vector(data_width*4 -1 downto 0); 
+		variable data : std_logic_vector(data_width*4 -1 downto 0);
 		variable index : natural := 0;
 		file load_file : text open read_mode is "boot.txt";
 		variable hex_file_line : line;
@@ -41,17 +41,17 @@ begin
 				index := index + 1;
 			end loop;
 		end if;
-		
+
 		if (clk'event and clk = '1') then
- 			if(cs_n = '0') then 
+ 			if(cs_n = '0') then
  				if(we_n = '0') then
  					ram1(conv_integer(addr(address_width -1 downto 2))) <= data_i;
 				else
 					data_o <= ram1(conv_integer(addr(address_width -1 downto 2)));
 				end if;
 			end if;
- 		end if;	
-		 
+ 		end if;
+
 	end process;
 
 end memory;

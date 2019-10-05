@@ -5,31 +5,35 @@ use ieee.std_logic_unsigned.all;
 use std.textio.all;
 
 entity uart is
-	port(	clk		: in std_logic;
-		reset		: in std_logic;
-		divisor		: in std_logic_vector(11 downto 0);
-		enable_read	: in std_logic;
-		enable_write	: in std_logic;
-		data_in		: in std_logic_vector(7 downto 0);
-		data_out	: out std_logic_vector(7 downto 0);
-		uart_read	: in std_logic;
-		uart_write	: out std_logic;
-		busy_write	: out std_logic;
-		data_avail	: out std_logic
+
+	port(
+		clk:          in std_logic;
+		reset:        in std_logic;
+		divisor:      in std_logic_vector(11 downto 0);
+		enable_read:  in std_logic;
+		enable_write: in std_logic;
+		data_in:      in std_logic_vector(7 downto 0);
+		data_out:     out std_logic_vector(7 downto 0);
+		uart_read:    in std_logic;
+		uart_write:   out std_logic;
+		busy_write:   out std_logic;
+		data_avail:   out std_logic
 	);
+
 end;
 
 architecture logic of uart is
-	signal delay_write_reg : std_logic_vector(11 downto 0);
-	signal bits_write_reg  : std_logic_vector(3 downto 0);
-	signal data_write_reg  : std_logic_vector(8 downto 0);
-	signal delay_read_reg  : std_logic_vector(11 downto 0);
-	signal bits_read_reg   : std_logic_vector(3 downto 0);
-	signal data_read_reg   : std_logic_vector(7 downto 0);
-	signal data_save_reg   : std_logic_vector(8 downto 0);
-	signal busy_write_sig  : std_logic;
-	signal read_value_reg  : std_logic_vector(7 downto 0);
-	signal uart_read2      : std_logic;
+
+	signal delay_write_reg: std_logic_vector(11 downto 0);
+	signal bits_write_reg: std_logic_vector(3 downto 0);
+	signal data_write_reg: std_logic_vector(8 downto 0);
+	signal delay_read_reg: std_logic_vector(11 downto 0);
+	signal bits_read_reg: std_logic_vector(3 downto 0);
+	signal data_read_reg: std_logic_vector(7 downto 0);
+	signal data_save_reg: std_logic_vector(8 downto 0);
+	signal busy_write_sig: std_logic;
+	signal read_value_reg: std_logic_vector(7 downto 0);
+	signal uart_read2: std_logic;
 
 begin
 
@@ -50,6 +54,7 @@ begin
 			delay_read_reg  <= (others => '0');
 			data_save_reg   <= (others => '0');
 		elsif clk'event and clk = '1' then
+
 			-- UART write
 			if bits_write_reg = "0000" then							--nothing left to write?
 				if enable_write = '1' then
@@ -111,5 +116,7 @@ begin
 		busy_write <= busy_write_sig;
 		data_avail <= data_save_reg(8);
 		data_out <= data_save_reg(7 downto 0);
+
 	end process;
+
 end;

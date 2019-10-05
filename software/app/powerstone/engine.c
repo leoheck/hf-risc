@@ -176,7 +176,7 @@ void engine(void)
 	    {
 	      tab1 = tab2 = rtp->r_tab;
 	      rpm1 = rpm2 = rpm;
-	    } 
+	    }
 	  else
 	    {
 	      tab2 = rtp->r_tab;
@@ -209,7 +209,7 @@ void interpolate(void)
   if (tabptr->t_val == ival)
     {
       inter1 = tabptr->t_base;
-    } 
+    }
   else
     {
       tabptr--;
@@ -219,7 +219,7 @@ void interpolate(void)
   if (tab2 == tab1)
     {
       inter_val = inter1;
-    } 
+    }
   else
     {
       tabptr = tab2;
@@ -228,7 +228,7 @@ void interpolate(void)
       if (tabptr->t_val == ival)
 	{
 	  inter2 = tabptr->t_base;
-	} 
+	}
       else
 	{
 	  tabptr--;
@@ -241,7 +241,7 @@ void interpolate(void)
 	  inter_delta = inter2 - inter1;
 	  offset = rpm - rpm1;
 	  inter_temp = inter1;
-	} 
+	}
       else
 	{
 	  inter_delta = inter1 - inter2;

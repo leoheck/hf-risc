@@ -87,7 +87,7 @@ void QSORT(base, n, size, compar)
     {
       qst(base, max);
       hi = base + thresh;
-    } 
+    }
   else
     {
       hi = max;
@@ -168,7 +168,7 @@ void qst(base, max)
 	      if (i == mid)
 		{
 		  mid = jj = j;
-		} 
+		}
 	      else
 		{
 		  jj = j;
@@ -179,7 +179,7 @@ void qst(base, max)
 	  if (i == mid)
 	    {
 	      break;
-	    } 
+	    }
 	  else
 	    {
 	      jj = mid;
@@ -204,7 +204,7 @@ void qst(base, max)
             qst(base, j);
 	  base = i;
 	  lo = hi;
-	} 
+	}
       else
 	{
 	  if (hi >= thresh)

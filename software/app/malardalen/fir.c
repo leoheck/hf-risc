@@ -215,7 +215,7 @@ int _main()
 {
   long  output[OUTSIZE];
 
-  fir_filter_int(in_data,output,700,fir_int,35,285); 
+  fir_filter_int(in_data,output,700,fir_int,35,285);
 //  fir_filter_int(in_data,output,10,fir_int,35,285);Changed JG/Ebbe
 
   /* Verify results */
@@ -306,6 +306,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

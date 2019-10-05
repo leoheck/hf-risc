@@ -25,16 +25,16 @@ bool prime (uint n) {
   uint i;
   if (even (n))
       return (n == 2);
-  for (i = 3; i * i <= n; i += 2) { 
+  for (i = 3; i * i <= n; i += 2) {
       if (divides (i, n)) /* ai: loop here min 0 max 357 end; */
-          return 0; 
+          return 0;
   }
   return (n > 1);
 }
 
 void swap (uint* a, uint* b) {
   uint tmp = *a;
-  *a = *b; 
+  *a = *b;
   *b = tmp;
 }
 
@@ -54,6 +54,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

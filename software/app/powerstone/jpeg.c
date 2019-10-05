@@ -360,7 +360,7 @@ void huff_ac_dec(short *data)
 		}
 	      data_zz[dindex] = temp;
 	      dindex = dindex + 1;
-	    } 
+	    }
 	  else
 	    {
 	      for (i = 0; i < 16; i++)
@@ -369,7 +369,7 @@ void huff_ac_dec(short *data)
 		  dindex = dindex + 1;
 		}
 	    }
-	} 
+	}
       else
 	{
 	  icnt = 63 - dindex;
@@ -519,7 +519,7 @@ int main()
   if (sum != 2598822)
     {
       puts("jpeg: fail\n");
-    } 
+    }
   else
     {
       puts("jpeg: success\n");

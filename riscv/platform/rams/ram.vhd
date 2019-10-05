@@ -29,15 +29,15 @@ begin
 	process(clk)
 	begin
 		if (clk'event and clk = '1') then
- 			if(cs_n = '0') then 
+ 			if(cs_n = '0') then
  				if(we_n = '0') then
  					ram1(conv_integer(addr(address_width -1 downto 2))) <= data_i;
 				else
 					data_o <= ram1(conv_integer(addr(address_width -1 downto 2)));
 				end if;
 			end if;
- 		end if;	
-		 
+ 		end if;
+
 	end process;
 
 end memory;

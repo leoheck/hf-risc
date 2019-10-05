@@ -42,7 +42,7 @@ architecture peripherals_arch of peripherals is
 	signal pbddr, pbout, pbin, pbin_inv, pbin_mask: std_logic_vector(15 downto 0);
 
 	signal paaltcfg0: std_logic_vector(31 downto 0);
-	signal paalt: std_logic_vector(15 downto 0);	
+	signal paalt: std_logic_vector(15 downto 0);
 	signal int_gpio, int_timer: std_logic;
 	signal int_gpioa, int_gpiob, int_timer1_ocr, int_timer1_ctc, tmr1_pulse, tmr1_dly, tmr1_dly2: std_logic;
 	signal timer0: std_logic_vector(31 downto 0);
@@ -95,10 +95,10 @@ begin
 
 	int_uart <= '1' when ((uartcause xor uartcause_inv) and uartmask) /= "0000" else '0';
 	uartcause <= uart1_write_busy & uart1_data_avail & uart0_write_busy & uart0_data_avail;
-	
+
 	int_spi <= '1' when ((spicause xor spicause_inv) and spimask) /= "0000" else '0';
 	spicause <= "00" & spi1_data_valid & spi0_data_valid;
-	
+
 	-- PORT A alternate config MUXes for outputs
 	paalt(0) <= int_timer1_ctc when paaltcfg0(1 downto 0) = "01" else int_timer1_ocr when paaltcfg0(1 downto 0) = "10" else paout(0);
 	paalt(1) <= spi1_clk_o when paaltcfg0(3 downto 2) = "11" else paout(1);
@@ -108,7 +108,7 @@ begin
 	paalt(5) <= spi0_clk_o when paaltcfg0(11 downto 10) =  "10" else paout(5);
 	paalt(6) <= spi0_do when paaltcfg0(13 downto 12) = "10" else paout(6);
 	paalt(7) <= spi0_do when paaltcfg0(15 downto 14) = "10" else paout(7);
-	
+
 	paalt(8) <= int_timer1_ctc when paaltcfg0(17 downto 16) = "01" else int_timer1_ocr when paaltcfg0(17 downto 16) = "10" else paout(8);
 	paalt(9) <= spi1_clk_o when paaltcfg0(19 downto 18) = "11" else paout(9);
 	paalt(10) <= uart0_tx when paaltcfg0(21 downto 20) = "01" else spi1_do when paaltcfg0(21 downto 20) = "11" else paout(10);
@@ -117,21 +117,21 @@ begin
 	paalt(13) <= spi0_clk_o when paaltcfg0(27 downto 26) = "10" else paout(13);
 	paalt(14) <= spi0_do when paaltcfg0(29 downto 28) = "10" else paout(14);
 	paalt(15) <= spi0_do when paaltcfg0(31 downto 30) = "10" else paout(15);
-	
+
 	-- PORT A alternate config MUXes for inputs
 	uart0_rx <= pain(3) when paaltcfg0(7 downto 6) = "01" else pain(11) when paaltcfg0(23 downto 22) = "01" else '1';
 	uart1_rx <= pain(5) when paaltcfg0(11 downto 10) = "01" else pain(13) when paaltcfg0(27 downto 26) = "01" else '1';
-	
+
 	spi0_ssn <= pain(4) when paaltcfg0(9 downto 8) = "10" else pain(12) when paaltcfg0(25 downto 24) = "10" else '1';
 	spi0_clk_i <= pain(5) when paaltcfg0(11 downto 10) = "10" else pain(13) when paaltcfg0(27 downto 26) = "10" else '0';
 	spi0_di <= pain(6) when paaltcfg0(13 downto 12) = "10" else pain(14) when paaltcfg0(29 downto 28) = "10" else
 		pain(7) when paaltcfg0(15 downto 14) = "10" else pain(15) when paaltcfg0(31 downto 30) = "10" else '0';
-	
+
 	spi1_ssn <= pain(0) when paaltcfg0(1 downto 0) = "11" else pain(8) when paaltcfg0(17 downto 16) = "11" else '1';
 	spi1_clk_i <= pain(1) when paaltcfg0(3 downto 2) = "11" else pain(9) when paaltcfg0(19 downto 18) = "11" else '0';
 	spi1_di <= pain(2) when paaltcfg0(5 downto 4) = "11" else pain(10) when paaltcfg0(21 downto 20) = "11" else
 		pain(3) when paaltcfg0(7 downto 6) = "11" else pain(11) when paaltcfg0(23 downto 22) = "11" else '0';
-	
+
 	-- address decoder, read from peripheral registers
 	process(clk_i, rst_i, segment, class, device, funct)
 	begin
@@ -520,7 +520,7 @@ begin
 		busy_write	=> uart0_write_busy,
 		data_avail	=> uart0_data_avail
 	);
-	
+
 	uart1: entity work.uart
 	port map(
 		clk		=> clk_i,

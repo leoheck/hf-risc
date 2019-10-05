@@ -171,7 +171,7 @@ begin
 		data_out_cpu => data_out_cpu,
 		data_w_cpu => data_w_cpu,
 		data_access_cpu => data_access_cpu,
-		
+
 		addr_mem => address,
 		data_read_mem => data_read,
 		data_write_mem => data_write,
@@ -195,7 +195,7 @@ begin
 	);
 
 	-- instruction and data memory (boot RAM)
-	boot_ram: entity work.ram 
+	boot_ram: entity work.ram
 	generic map (memory_type => "DEFAULT")
 	port map (
 		clk			=> clock,
@@ -220,7 +220,7 @@ begin
 		data_i	=> data_write(7 downto 0),
 		data_o	=> data_read_ram(7 downto 0)
 	);
-		
+
 	memory0ub: entity work.bram
 	generic map (	memory_file => memory_file,
 					data_width => 8,
@@ -234,7 +234,7 @@ begin
 		data_i	=> data_write(15 downto 8),
 		data_o	=> data_read_ram(15 downto 8)
 	);
-		
+
 	memory1lb: entity work.bram
 	generic map (	memory_file => memory_file,
 					data_width => 8,
@@ -248,7 +248,7 @@ begin
 		data_i	=> data_write(23 downto 16),
 		data_o	=> data_read_ram(23 downto 16)
 	);
-		
+
 	memory1ub: entity work.bram
 	generic map (	memory_file => memory_file,
 					data_width => 8,

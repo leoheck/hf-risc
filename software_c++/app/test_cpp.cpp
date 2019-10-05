@@ -69,7 +69,7 @@ void main_app() {
 
 	obj2.printName();
 	obj2.printId();
-	
+
 	p = &obj3;
 	p->testMethod();
 	p->testMethod2();

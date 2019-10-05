@@ -143,7 +143,7 @@ begin
 					else
 						state <= idle;
 					end if;
-				when key_sel1 => 
+				when key_sel1 =>
 					if (encrypt = '1') then
 						state <= enc_step2;
 					else
@@ -181,7 +181,7 @@ begin
 			end case;
 		end if;
 	end process;
-	
+
 end xtea_arch;
 
 

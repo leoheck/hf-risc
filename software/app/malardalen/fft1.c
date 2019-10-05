@@ -137,7 +137,7 @@ int fft1(int n, int flag)
 	 if(n < 2) return(999);
 	 iter = log((double)n)/log(2.0);
 	 j = 1;
-#ifdef DEBUG 
+#ifdef DEBUG
 	printf("iter=%d\n",iter);
 #endif
 	 for(i = 0; i < iter; i++)
@@ -225,6 +225,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

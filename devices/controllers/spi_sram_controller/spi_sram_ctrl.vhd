@@ -22,9 +22,11 @@ use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 entity spi_sram_ctrl is
+
 	generic (
 		BURST_SIZE: integer := 4
 	);
+
 	port (	-- core interface
 		clk_i: in std_logic;
 		rst_i: in std_logic;
@@ -46,9 +48,11 @@ entity spi_sram_ctrl is
 		spi_mosi_o: out std_logic;				-- spi bus mosi output
 		spi_miso_i: in std_logic				-- spi bus miso input
 	);
+
 end spi_sram_ctrl;
 
 architecture spi_sram_ctrl_arch of spi_sram_ctrl is
+
 	type states is (start, cmd_wren, cmd_write, cmd_read, addr_phase, data_phase, ready);
 	signal state: states;
 	signal data_o_reg: std_logic_vector(31 downto 0);
@@ -58,20 +62,22 @@ architecture spi_sram_ctrl_arch of spi_sram_ctrl is
 	signal data_in, data_out: std_logic_vector(7 downto 0);
 	signal wren, data_valid, bmode, hmode, cpu_stall: std_logic;
 
+
 begin
 	spi_core: entity work.spi_master
-	generic map(
+	generic map (
 		BYTE_SIZE => 8
 	)
-	port map(	clk_i => clk_i,
-			rst_i => rst_i,
-			data_i => data_in,
-			data_o => data_out,
-			wren_i => wren,
-			data_valid_o => data_valid,
-			spi_clk_o => spi_clk_o,
-			spi_mosi_o => spi_mosi_o,
-			spi_miso_i => spi_miso_i
+	port map (
+		clk_i => clk_i,
+		rst_i => rst_i,
+		data_i => data_in,
+		data_o => data_out,
+		wren_i => wren,
+		data_valid_o => data_valid,
+		spi_clk_o => spi_clk_o,
+		spi_mosi_o => spi_mosi_o,
+		spi_miso_i => spi_miso_i
 	);
 
 	data_o <= data_o_reg;

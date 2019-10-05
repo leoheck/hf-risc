@@ -13,7 +13,7 @@ entity processor is
 		data_i:		in std_logic_vector(31 downto 0);
 		data_o:		out std_logic_vector(31 downto 0);
 		data_w_o:	out std_logic_vector(3 downto 0);
-		
+
 		data_mode_o:	out std_logic_vector(2 downto 0);
 
 		extio_in:	in std_logic_vector(7 downto 0);

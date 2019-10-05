@@ -2,6 +2,6 @@
 
 int main(){
 	coremain();
-	
+
 	return 0;
 }
