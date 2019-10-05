@@ -3,7 +3,7 @@
 void free(void *ptr)
 {
 	struct mem_block_s *p;
-	
+
 	p = ((struct mem_block_s *)ptr) - 1;
 	p->size &= ~1L;
 	last_free = first_free;
@@ -12,7 +12,7 @@ void free(void *ptr)
 void *malloc(uint32_t size)
 {
 	struct mem_block_s *p, *q, *r, n;
-	
+
 	size = align4(size);
 	p = last_free;
 	q = p;
@@ -36,7 +36,7 @@ void *malloc(uint32_t size)
 
 	if (p->next == 0)
 		return 0;
-	
+
 	last_free = p;
 	r = p->next;
 	p->next = (struct mem_block_s *)((size_t)p + size + sizeof(struct mem_block_s));
@@ -44,7 +44,7 @@ void *malloc(uint32_t size)
 	n.next = r;
 	n.size = (p->size & ~1L) - size - sizeof(struct mem_block_s);
 	*p->next = n;
-	
+
 	return (void *)(p + 1);
 }
 
@@ -53,7 +53,7 @@ void heap_init(uint32_t *zone, uint32_t len)
 	void *heap = zone;
 	struct mem_block_s *p = (struct mem_block_s *)heap;
 	struct mem_block_s *q = (struct mem_block_s *)((size_t)(struct mem_block_s *)heap + len - (sizeof(struct mem_block_s)));
-	
+
 	len = align4(len);
 	p->next = q;
 	p->size = len - sizeof(struct mem_block_s) - sizeof(struct mem_block_s);

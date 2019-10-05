@@ -16,10 +16,13 @@ use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 entity spi_master_slave is
+
 	generic (
 		BYTE_SIZE: integer := 8
 	);
-	port (	-- core interface
+
+	port (
+		-- core interface
 		clk_i: in std_logic;
 		rst_i: in std_logic;
 		data_i: in std_logic_vector(BYTE_SIZE-1 downto 0);	-- parallel data in (clocked on rising spi_clk after last bit)
@@ -34,16 +37,20 @@ entity spi_master_slave is
 		spi_do_o: out std_logic;				-- spi mosi (master mode) or miso (slave mode)
 		spi_di_i: in std_logic					-- spi miso (master mode) or mosi (slave mode)
 	);
+
 end spi_master_slave;
 
 architecture spi_master_slave_arch of spi_master_slave is
+
 	type states is (idle, data1, clock1, data2, clock2, sdata1, sdata2, done);
 	signal state: states;
 	signal data_reg: std_logic_vector(BYTE_SIZE-1 downto 0);
 	signal clk_cnt: std_logic_vector(8 downto 0);
 	signal counter: std_logic_vector(8 downto 0);
 	signal fsm_trigger: std_logic;
+
 begin
+
 	process(clk_i, rst_i)
 	begin
 		if rst_i = '1' then

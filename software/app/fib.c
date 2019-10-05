@@ -19,7 +19,7 @@ int fib(int n){
 int main(){
 	fib(20);
 	putchar('\n');
-	
+
 	return 0;
 }
 

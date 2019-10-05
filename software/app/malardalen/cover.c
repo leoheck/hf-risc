@@ -225,7 +225,7 @@ int swi10(int c)
 	return c;
 }
 
-int _main() 
+int _main()
 {
 	volatile int cnt=0;
 
@@ -247,6 +247,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

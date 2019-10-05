@@ -4,32 +4,32 @@ use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 entity interrupt_controller is
-	port (	clock:		in std_logic;
-		reset:		in std_logic;
 
-		stall:		in std_logic;
-
-		irq_vector_cpu:	out std_logic_vector(31 downto 0);
-		irq_cpu:	out std_logic;
-		irq_ack_cpu:	in std_logic;
-		exception_cpu:	in std_logic;
-		address_cpu: 	in std_logic_vector(31 downto 0);
-		data_in_cpu:	out std_logic_vector(31 downto 0);
-		data_out_cpu:	in std_logic_vector(31 downto 0);
-		data_w_cpu:	in std_logic_vector(3 downto 0);
-		data_access_cpu:	in std_logic;
-
-		addr_mem:	out std_logic_vector(31 downto 0);
-		data_read_mem:	in std_logic_vector(31 downto 0);
-		data_write_mem:	out std_logic_vector(31 downto 0);
-		data_we_mem:	out std_logic_vector(3 downto 0);
-
-		extio_in:	in std_logic_vector(7 downto 0);
-		extio_out:	out std_logic_vector(7 downto 0)
+	port (
+		clock:           in std_logic;
+		reset:           in std_logic;
+		stall:           in std_logic;
+		irq_vector_cpu:  out std_logic_vector(31 downto 0);
+		irq_cpu:         out std_logic;
+		irq_ack_cpu:     in std_logic;
+		exception_cpu:   in std_logic;
+		address_cpu:     in std_logic_vector(31 downto 0);
+		data_in_cpu:     out std_logic_vector(31 downto 0);
+		data_out_cpu:    in std_logic_vector(31 downto 0);
+		data_w_cpu:      in std_logic_vector(3 downto 0);
+		data_access_cpu: in std_logic;
+		addr_mem:        out std_logic_vector(31 downto 0);
+		data_read_mem:   in std_logic_vector(31 downto 0);
+		data_write_mem:  out std_logic_vector(31 downto 0);
+		data_we_mem:     out std_logic_vector(3 downto 0);
+		extio_in:        in std_logic_vector(7 downto 0);
+		extio_out:       out std_logic_vector(7 downto 0)
 	);
+
 end interrupt_controller;
 
 architecture arch_interrupt_controller of interrupt_controller is
+
 	signal irq_cause, irq_mask_reg, irq_status_reg, extio_out_reg: std_logic_vector(7 downto 0);
 	signal periph_data, irq_vector_reg, irq_epc_reg: std_logic_vector(31 downto 0);
 	signal interrupt, irq: std_logic;
@@ -42,6 +42,7 @@ architecture arch_interrupt_controller of interrupt_controller is
 	signal data_we_mem_s: std_logic_vector(3 downto 0);
 
 begin
+
 	-- address decoder, read from peripheral registers
 	process(clock, reset, periph_access, address_cpu, irq_vector_reg, irq_cause, irq_mask_reg, irq_status_reg, irq_epc_reg, data_read_mem, extio_in, extio_out_reg)
 	begin
@@ -179,4 +180,3 @@ begin
 	extio_out <= extio_out_reg;
 
 end arch_interrupt_controller;
-

@@ -63,10 +63,10 @@ float select(unsigned long k, unsigned long n)
 
 	l=1;
 	ir=n;
-	flag = flag2 = 0; 
+	flag = flag2 = 0;
 	while (!flag) {
 		if (ir <= l+1) {
-			if (ir == l+1) 
+			if (ir == l+1)
 			  if (arr[ir] < arr[l]) {
 			    SWAP(arr[l],arr[ir])
 			      }
@@ -87,13 +87,13 @@ float select(unsigned long k, unsigned long n)
 			j=ir;
 			a=arr[l];
 			while (!flag2) {
-				i++; 
+				i++;
 				while (arr[i] < a) i++;
-				j--; 
+				j--;
 				while (arr[j] > a) j--;
 				if (j < i) flag2 = 1;
 				if (!flag2) SWAP(arr[i],arr[j]);
-				
+
 			}
 			arr[l]=arr[j];
 			arr[j]=a;
@@ -119,6 +119,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

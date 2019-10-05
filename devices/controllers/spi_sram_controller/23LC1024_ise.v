@@ -82,8 +82,8 @@ module M23LC1024 (SI_SIO0, SO_SIO1, SCK, CS_N, SIO2, HOLD_N_SIO3, RESET);
 
    input                CS_N;                           // chip select - active low
 
-   inout                SIO2;                           // serial data input/output 		
-   
+   inout                SIO2;                           // serial data input/output
+
    inout                HOLD_N_SIO3;                    // interface suspend - active low/
                                                         //   serial data input/output
 
@@ -113,7 +113,7 @@ module M23LC1024 (SI_SIO0, SO_SIO1, SCK, CS_N, SIO2, HOLD_N_SIO3, RESET);
    reg  [01:00]         OpMode;                         // operation mode
 
    reg  [01:00]         IOMode;                         // I/O mode
-   
+
    wire                 Hold;                           // hold function
 
    reg  [07:00]         MemoryBlock [0:131071];         // SRAM data memory array (131072x8)
@@ -178,7 +178,7 @@ module M23LC1024 (SI_SIO0, SO_SIO1, SCK, CS_N, SIO2, HOLD_N_SIO3, RESET);
 
       IOMode = `SPIMODE;
    end
-   
+
    assign Hold = (HOLD_N_SIO3 == 0) & (IOMode == `SPIMODE);
 
 
@@ -377,7 +377,7 @@ module M23LC1024 (SI_SIO0, SO_SIO1, SCK, CS_N, SIO2, HOLD_N_SIO3, RESET);
                   if ((ClockCounter >= 32) & (ClockCounter[2:0] == 3'b000)) begin
                      DataShifterO <= MemoryBlock[AddrRegister[16:00]];
                      SO_Enable    <= 1;
-                     
+
                      case (OpMode)
                        `PAGEMODE: AddrRegister[04:00] <= AddrRegister[04:00] + 1;
                        `SEQMODE: AddrRegister[16:00] <= AddrRegister[16:00] + 1;
@@ -389,7 +389,7 @@ module M23LC1024 (SI_SIO0, SO_SIO1, SCK, CS_N, SIO2, HOLD_N_SIO3, RESET);
                   if ((ClockCounter >= 20) & (ClockCounter[1:0] == 2'b00)) begin
                      DataShifterO <= MemoryBlock[AddrRegister[16:00]];
                      SO_Enable    <= 1;
-                     
+
                      case (OpMode)
                        `PAGEMODE: AddrRegister[04:00] <= AddrRegister[04:00] + 1;
                        `SEQMODE: AddrRegister[16:00] <= AddrRegister[16:00] + 1;
@@ -401,7 +401,7 @@ module M23LC1024 (SI_SIO0, SO_SIO1, SCK, CS_N, SIO2, HOLD_N_SIO3, RESET);
                   if ((ClockCounter >= 10) & (ClockCounter[0] == 1'b0)) begin
                      DataShifterO <= MemoryBlock[AddrRegister[16:00]];
                      SO_Enable    <= 1;
-                     
+
                      case (OpMode)
                        `PAGEMODE: AddrRegister[04:00] <= AddrRegister[04:00] + 1;
                        `SEQMODE: AddrRegister[16:00] <= AddrRegister[16:00] + 1;

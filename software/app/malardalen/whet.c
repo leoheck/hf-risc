@@ -244,7 +244,7 @@ float x1, x2, x3, x4;
 	ftoa(x2, s2, 6);
 	ftoa(x3, s3, 6);
 	ftoa(x4, s4, 6);
-	
+
 	printf("\n%d %d %d  %s  %s  %s  %s", n, j, k, s1, s2, s3, s4);
 }
 #endif

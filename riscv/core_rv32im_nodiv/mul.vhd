@@ -96,7 +96,7 @@ begin
 
 	o1 <= reg((mul_width*2)-1 downto mul_width);
 	o0 <= reg(mul_width-1 downto 0);
-	
+
 	rdy <= rdy_sig;
 
 end mul_arch;

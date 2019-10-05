@@ -204,7 +204,7 @@ int minver(int row, int col, double eps)
 	  }
 	det = w1;
 	return(0);
-	
+
 }
 
 void main(void){
@@ -215,6 +215,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

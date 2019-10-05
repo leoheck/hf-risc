@@ -26,6 +26,6 @@ int main(){
 		ftoa(e, buf, 6);
 		printf("[%d] - e = %s\n", i, buf);
 	}
-	
+
 	return 0;
 }

@@ -50,7 +50,7 @@ struct DATA {
 
 #ifdef DEBUG
 	int cnt1;
-#endif 
+#endif
 
 struct DATA data[15] = { {1, 100},
 	     {5,200},
@@ -120,6 +120,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

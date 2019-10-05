@@ -98,7 +98,7 @@ mkdir ${gcc_base}-initial
 cd ${gcc_base}-initial
 ${src_dir}/${gcc_base}/configure --prefix=$PREFIX --target=$TARGET \
         --with-gnu-as --with-gnu-ld --enable-languages=c \
-        --with-newlib --without-headers 
+        --with-newlib --without-headers
 make
 make install
 

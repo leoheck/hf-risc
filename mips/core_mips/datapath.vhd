@@ -87,7 +87,7 @@ begin
 		reg_to_mem_ctl_r = '0' and mem_to_reg_ctl_r = '0' else '0';
 
 	irq_ack <= irq_ack_s_dly;
-	
+
 	exception <= '0';
 
 	process(clock, reset, irq, irq_ack_s, mem_to_reg_ctl_r, mwait, stall)
@@ -295,7 +295,7 @@ begin
 					when "10" => data_in_s <= x"000000" & data_in(15 downto 8);
 					when "01" => data_in_s <= x"000000" & data_in(23 downto 16);
 					when others => data_in_s <= x"000000" & data_in(31 downto 24);
-		
+
 				end case;
 			when "10" =>			-- load half word
 				case result(1) is

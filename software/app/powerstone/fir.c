@@ -76,7 +76,7 @@ static float gaussian()
       gstore = v1 * fac;
       gaus = v2 * fac;
       ready = 1;
-    } 
+    }
   else
     {
       ready = 0;
@@ -104,11 +104,11 @@ void main()
       x = sin(0.05 * 2 * 3.14159265358979323846 * i) + sigma * gaussian();
       x *= 25000.0;
     }
- 
+
  if (x < 8180 || x > 8196)
     {
       puts("fir: failed\n");
-    } 
+    }
   else
     {
       puts("fir: success\n");

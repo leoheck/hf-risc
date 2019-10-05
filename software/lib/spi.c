@@ -44,7 +44,7 @@ int8_t spi_transfer(int8_t data){
 	int32_t i;
 	int8_t newdata = 0;
 
-#if SPI_MODE == 0	
+#if SPI_MODE == 0
 	for (i = 0; i < 8; i++){
 		if (data & 0x80){
 			OUT |= SPI_MOSI;

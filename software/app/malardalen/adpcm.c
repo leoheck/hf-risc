@@ -48,7 +48,7 @@
 /*                                                                       */
 /*************************************************************************/
 
-/* To be able to run with printouts 
+/* To be able to run with printouts
 #include <stdio.h> */
 #include <hf-risc.h>
 
@@ -838,7 +838,7 @@ int _main()
     /* Since the number of times we loop in my_sin depends on the argument we
        add the fact: xxmain_0:[]: */
     for(i = 0 ; i < SIZE ; i++) {
-              test_data[i] = (int)j*my_cos(f*PI*i); 
+              test_data[i] = (int)j*my_cos(f*PI*i);
     }
 
 
@@ -882,7 +882,7 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 #endif
 

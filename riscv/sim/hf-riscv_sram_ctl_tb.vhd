@@ -26,7 +26,7 @@ architecture tb of tb is
 	signal data_read_periph, data_read_periph_s, data_write_periph: std_logic_vector(31 downto 0);
 	signal gpioa_in, gpioa_out, gpioa_ddr: std_logic_vector(7 downto 0);
 	signal gpio_sig: std_logic := '0';
-	
+
 	signal data_read_sram: std_logic_vector(31 downto 0);
 	signal data_mode: std_logic_vector(2 downto 0);
 	signal burst, wr, rd, stall_dly, stall_dly2, stall_sram, spi_cs, spi_clk, spi_mosi, spi_miso, hold_n: std_logic := '0';
@@ -120,8 +120,8 @@ begin
 		gpioa_out => gpioa_out,
 		gpioa_ddr => gpioa_ddr
 	);
-	
-	
+
+
 	sram_ctrl_core: entity work.spi_sram_ctrl
 	port map(	clk_i => clock_in,
 			rst_i => reset,

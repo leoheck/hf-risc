@@ -413,7 +413,7 @@
 ;; D2S          double to float single
 ;; S2D          float single to double
 
-(define_attr "cnv_mode" "unknown,I2S,I2D,S2I,D2I,D2S,S2D" 
+(define_attr "cnv_mode" "unknown,I2S,I2D,S2I,D2I,D2S,S2D"
   (const_string "unknown"))
 
 ;; Is this an extended instruction in mips16 mode?
@@ -1147,7 +1147,7 @@
 		  (match_operand:GPR 2 "arith_operand" "!u,d,Uead,Uuw6,Uesp,Usb4,Q")))]
   "!TARGET_MIPS16"
 {
-  if (which_alternative == 0 
+  if (which_alternative == 0
       || which_alternative == 1)
     return "<d>addu\t%0,%1,%2";
   else
@@ -3103,7 +3103,7 @@
   "TARGET_HARD_FLOAT && TARGET_DOUBLE_FLOAT"
   "cvt.s.d\t%0,%1"
   [(set_attr "type"	"fcvt")
-   (set_attr "cnv_mode"	"D2S")   
+   (set_attr "cnv_mode"	"D2S")
    (set_attr "mode"	"SF")])
 
 ;; Integer truncation patterns.  Truncating SImode values to smaller
@@ -3537,7 +3537,7 @@
   "TARGET_HARD_FLOAT && TARGET_DOUBLE_FLOAT"
   "cvt.d.s\t%0,%1"
   [(set_attr "type"	"fcvt")
-   (set_attr "cnv_mode"	"S2D")   
+   (set_attr "cnv_mode"	"S2D")
    (set_attr "mode"	"DF")])
 
 ;;
@@ -6053,10 +6053,10 @@
     {
       rtx reg = gen_reg_rtx (SImode);
       rtx offset = gen_int_mode (-INTVAL (operands[1]), SImode);
-      
+
       if (!arith_operand (offset, SImode))
         offset = force_reg (SImode, offset);
-      
+
       emit_insn (gen_addsi3 (reg, operands[0], offset));
       operands[0] = reg;
     }
@@ -6091,10 +6091,10 @@
   rtx diff_vec = PATTERN (NEXT_INSN (operands[2]));
 
   gcc_assert (GET_CODE (diff_vec) == ADDR_DIFF_VEC);
-  
+
   output_asm_insn ("sltu\t%0, %1", operands);
   output_asm_insn ("bteqz\t%3", operands);
-  
+
   switch (GET_MODE (diff_vec))
     {
     case HImode:
@@ -6103,7 +6103,7 @@
       output_asm_insn ("<d>addu\t%5, %4, %5", operands);
       output_asm_insn ("lh\t%5, 0(%5)", operands);
       break;
-    
+
     case SImode:
       output_asm_insn ("sll\t%5, %0, 2", operands);
       output_asm_insn ("la\t%4, %2", operands);
@@ -6114,9 +6114,9 @@
     default:
       gcc_unreachable ();
     }
-  
+
   output_asm_insn ("addu\t%4, %4, %5", operands);
-  
+
   return "j\t%4";
 }
   [(set_attr "insn_count" "16")])

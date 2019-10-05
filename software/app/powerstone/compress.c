@@ -83,7 +83,7 @@ int Compress(argc, argv)
   if ((cp = (char *) rindex(argv[0], '/')) != 0)
     {
       cp++;
-    } 
+    }
   else
     cp = argv[0];
   for (argc--, argv++; argc > 0; argc--, argv++)
@@ -220,7 +220,7 @@ compress()
 	{
 	  ent = codetab[i];
 	  continue;
-	} 
+	}
       else if ((long) htab[i] < 0)
 	{
 	  goto nomatch;
@@ -248,7 +248,7 @@ compress()
 	{
 	  codetab[i] = free_ent++;
 	  htab[i] = fcode;
-	} 
+	}
       else if ((count_int) in_count >= checkpoint && block_compress)
 	{
 	  cl_block();
@@ -318,7 +318,7 @@ void output(code)
 	    {
 	      maxcode = ((1 << (n_bits = 9)) - 1);
 	      clear_flg = 0;
-	    } 
+	    }
 	  else
 	    {
 	      n_bits++;
@@ -328,7 +328,7 @@ void output(code)
 		maxcode = ((1 << (n_bits)) - 1);
 	    }
 	}
-    } 
+    }
   else
     {
       if (offset > 0)
@@ -457,7 +457,7 @@ foreground()
   if (bgnd_flag)
     {
       return (0);
-    } 
+    }
   else
     return (1);
 }
@@ -481,12 +481,12 @@ cl_block()
       if (rat == 0)
 	{
 	  rat = 0x7fffffff;
-	} 
+	}
       else
 	{
 	  rat = in_count / rat;
 	}
-    } 
+    }
   else
     {
       rat = (in_count << 8) / bytes_out;
@@ -494,7 +494,7 @@ cl_block()
   if (rat > ratio)
     {
       ratio = rat;
-    } 
+    }
   else
     {
       ratio = 0;
@@ -543,7 +543,7 @@ prratio(num, den)
   if (num > 214748L)
     {
       q = num / (den / 10000L);
-    } 
+    }
   else
     {
       q = 10000L * num / den;

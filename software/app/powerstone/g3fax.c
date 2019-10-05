@@ -475,7 +475,7 @@ int getbit()
 	{
 	  lastbyte = 0;
 	  eof = 1;
-	} 
+	}
       else
 	{
 	  lastbyte = *nextbyte++;
@@ -560,7 +560,7 @@ main(argc, argv)
 		  break;
 		}
 	      runlen += (runcode - 64) * 64;
-	    } 
+	    }
 	  else
 	    {
 	      runlen += runcode;
@@ -582,7 +582,7 @@ main(argc, argv)
 	      runtab = g3black;
 	      runetab = &g3black[sizeof(g3black)];
 	      code = getbit();
-	    } 
+	    }
 	  else
 	    {
 	      runtab = g3white;
@@ -597,7 +597,7 @@ main(argc, argv)
   if (sum != faxsum)
     {
       puts("g3fax: fail\n");
-    } 
+    }
   else
     {
       puts("g3fax: success\n");

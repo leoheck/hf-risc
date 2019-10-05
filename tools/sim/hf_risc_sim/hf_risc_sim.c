@@ -91,7 +91,7 @@ static int32_t mem_read(state *s, int32_t size, uint32_t address){
 		case UART0_DIV:		return 0;
 	}
 	if (address >= EXIT_TRAP) return 0;
-	
+
 	ptr = (uint32_t *)(s->mem + (address % MEM_SIZE));
 
 	switch(size){

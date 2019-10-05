@@ -140,7 +140,7 @@ double ArrayA[], ArrayB[], MeanA, MeanB /*, *Coef*/;
    /* Coef used globally */
    Coef = numerator / (sqrt(Aterm) * sqrt(Bterm));
 }
-    
+
 
 
 void Initialize(Array)
@@ -190,6 +190,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

@@ -24,10 +24,10 @@ int main(){
 	e = fix_val(0.0);
 	for (i = 0; i < 13; i++){
 		e += fix_div(fix_val(1.0), fix_val(fac(i)));
-		
+
 		fixtoa(e, buf, 6);
 		printf("[%d] - e = %s\n", i, buf);
 	}
-	
+
 	return 0;
 }

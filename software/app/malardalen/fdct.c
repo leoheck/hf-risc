@@ -7,11 +7,11 @@
 // *********************************************************************************************************
 // *                        FDCT.C                                                                         *
 // *                                                                                                       *
-// * Forward Discrete Cosine Transform                                                                     * 
-// * Used on 8x8 image blocks                                                                              *    
+// * Forward Discrete Cosine Transform                                                                     *
+// * Used on 8x8 image blocks                                                                              *
 // * to reassemble blocks in order to ease quantization compressing image information on the more          *
 // * significant frequency components                                                                      *
-// *                                                                                                       * 
+// *                                                                                                       *
 // *  Expected Result -> short int block[64]= { 699,164,-51,-16, 31,-15,-19,  8,                           *
 // *                                             71, 14,-61, -2,-11,-12,  7, 12,                           *
 // *                                            -58,-55, 13, 28,-20, -7, 14,-18,                           *
@@ -25,8 +25,8 @@
 // *                               ffc6ffc9 000d001c ffecfff9 000effee 001d0016 00030003 fff50007 000bffea *
 // *                               ffffffe4 ffe5000a 0000fff9 000b0006 00070006 00150015 fff6fff8 0002fff2 *
 // *                               0001fff9 fff1fff1 fff6000f 0010fff6 0000ffff 0000000f 0004fff3 fffb0004 *
-// *                                                                                                       * 
-// *  Number of clock cycles (with these inputs) -> 2132                                                   * 
+// *                                                                                                       *
+// *  Number of clock cycles (with these inputs) -> 2132                                                   *
 // *********************************************************************************************************
 
 #include <hf-risc.h>
@@ -60,7 +60,7 @@ short int block[64]=
   119 ,121 ,122 ,120 ,120 , 59 , 59 , 59,
   119 ,120 ,121 ,122 ,122 , 55 , 55 , 55,
   121 ,121 ,121 ,121 , 60 , 57 , 57 , 57,
-  122 ,122 , 61 , 63 , 62 , 57 , 57 , 57, 
+  122 ,122 , 61 , 63 , 62 , 57 , 57 , 57,
   62 , 62 , 61 , 61 , 63 , 58 , 58 , 58,
 };
 
@@ -236,12 +236,12 @@ int _main(void)
 {
 /*  int i; */
 
-  fdct (block, 8);  // 8x8 Blocks, DC precision value = 0, Quantization coefficient (mquant) = 64   
-  
+  fdct (block, 8);  // 8x8 Blocks, DC precision value = 0, Quantization coefficient (mquant) = 64
+
   #ifdef IO
     for(i=0;i<64;i+=2) printf("block[%2d] -> %8d . block[%2d] -> %8d\n",i,block[i],i+1,block[i+1]);
   #endif
-  
+
   return block[0];
 }
 
@@ -254,6 +254,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

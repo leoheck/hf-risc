@@ -12,6 +12,7 @@ use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 entity peripherals is
+
 	port (
 		clk_i: in std_logic;
 		rst_i: in std_logic;
@@ -28,27 +29,29 @@ entity peripherals is
 		gpiob_out: out std_logic_vector(15 downto 0);
 		gpiob_ddr: out std_logic_vector(15 downto 0);
 
-		-- MAC Sync		I/O space: 0xe0ff4000 - 0xe0ff43ff
+		-- MAC Sync	(I/O space: 0xe0ff4000 - 0xe0ff43ff)
 		sync_mac_i: in std_logic_vector(31 downto 0);
 		sync_mac_o: out std_logic_vector(31 downto 0);
 		sync_mac_en_o: out std_logic;
 
-		-- MAC Async		I/O space: 0xe0ff4400 - 0xe0ff47ff
+		-- MAC Async (I/O space: 0xe0ff4400 - 0xe0ff47ff)
 		async_mac_i: in std_logic_vector(31 downto 0);
 		async_mac_o: out std_logic_vector(31 downto 0);
 		async_mac_en_o: out std_logic;
 		async_mac_rst_o: out std_logic;
 
-		-- Delay line		I/O space: 0xe0ff4800 - 0xe0ff4bff
+		-- Delay line (I/O space: 0xe0ff4800 - 0xe0ff4bff)
 		de_pause_o: out std_logic_vector(1 downto 0);
 		de_config_o: out std_logic_vector(4 downto 0);
 		de_cde_sel_o: out std_logic_vector(3 downto 0);
 		de_mde_sel_o: out std_logic_vector(3 downto 0);
 		de_cde_ctrl_o: out std_logic_vector(15 downto 0)
 	);
+
 end peripherals;
 
 architecture peripherals_arch of peripherals is
+
 	signal segment: std_logic_vector(3 downto 0);
 	signal class: std_logic_vector(3 downto 0);
 	signal device: std_logic_vector(5 downto 0);
@@ -96,6 +99,7 @@ architecture peripherals_arch of peripherals is
 	signal de_cde_ctrl_we_r: std_logic;
 
 begin
+
 	segment <= addr_i(27 downto 24);
 	class <= addr_i(19 downto 16);
 	device <= addr_i(15 downto 10);
@@ -636,7 +640,7 @@ begin
 	int_timer1_ocr <= '1' when timer1 < timer1_ocr else '0';
 
 	uart0: entity work.uart
-	port map(
+	port map (
 		clk		=> clk_i,
 		reset		=> rst_i,
 		divisor		=> uart0_divisor(11 downto 0),
@@ -651,7 +655,7 @@ begin
 	);
 
 	uart1: entity work.uart
-	port map(
+	port map (
 		clk		=> clk_i,
 		reset		=> rst_i,
 		divisor		=> uart1_divisor(11 downto 0),
@@ -666,10 +670,10 @@ begin
 	);
 
 	spi0: entity work.spi_master_slave
-	generic map(
+	generic map (
 		BYTE_SIZE => 8
 	)
-	port map(	clk_i => clk_i,
+	port map (	clk_i => clk_i,
 			rst_i => rst_i,
 			data_i => spi0_data_write,
 			data_o => spi0_data_read,
@@ -684,10 +688,10 @@ begin
 	);
 
 	spi1: entity work.spi_master_slave
-	generic map(
+	generic map (
 		BYTE_SIZE => 8
 	)
-	port map(	clk_i => clk_i,
+	port map (	clk_i => clk_i,
 			rst_i => rst_i,
 			data_i => spi1_data_write,
 			data_o => spi1_data_read,

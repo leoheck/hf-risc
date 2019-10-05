@@ -1,10 +1,10 @@
 File: Release Notes
 	Version: 1.01
-	
+
 History:
 	Version 1.01
 	- Added validation testing the sizes of datatypes.
-	
+
 	Version 1.00
 	- First public version.
 
@@ -16,7 +16,7 @@ Validation:
 	o MIPS32 BE linux with CodeSourcery compiler 4.2-177 on Malta/Linux with a 1004K 3-core system
 	o PPC simulator with gcc 4.2.2 (No OS)
 	o PPC 64b BE linux (yellowdog) with gcc 3.4 and 4.1 (Dual core system)
-	o BF533 with VDSP50 
+	o BF533 with VDSP50
 	o Renesas R8C/H8 MCU with HEW 4.05
 	o NXP LPC1700 armcc v4.0.0.524
 	o NEC 78K with IAR v4.61
@@ -24,10 +24,10 @@ Validation:
 
 	Coverage:
 	GCOV results can be found on SVN under cover.
-	
+
 	Memory analysis:
 	Valgrind 3.4.0 used and no errors reported.
-	
+
 	Balance analysis:
 	Number of instructions executed for each function tested with cachegrind and found balanced with gcc and -O0.
 
@@ -35,7 +35,7 @@ Statistics:
 
 Lines:
 (start table)
-Lines  Blank  Cmnts  Source     AESL     
+Lines  Blank  Cmnts  Source     AESL
 =====  =====  =====  =====  ==========  =======================================
   469     66    170    251       627.5  core_list_join.c  (C)
   330     18     54    268       670.0  core_main.c  (C)
@@ -48,9 +48,9 @@ Lines  Blank  Cmnts  Source     AESL
   235     30    104    104       260.0  linux/core_portme.h  (C)
   528     45    178    316       790.0  ----- Porting -----  (2 files)
 
- 
+
 * For comparison, here are the stats for Dhrystone
-Lines  Blank  Cmnts  Source     AESL     
+Lines  Blank  Cmnts  Source     AESL
 =====  =====  =====  =====  ==========  =======================================
   311     15    242     54       135.0  dhry.h  (C)
   789    132    119    553      1382.5  dhry_1.c  (C)

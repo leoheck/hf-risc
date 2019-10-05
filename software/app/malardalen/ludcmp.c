@@ -66,7 +66,7 @@ double          a[50][50], b[50], x[50];
 int             ludcmp( /* int nmax, */ int n, double eps);
 
 
-static double 
+static double
 fabs(double n)
 {
 	double          f;
@@ -78,7 +78,7 @@ fabs(double n)
 	return f;
 }
 
-int 
+int
 _main(void)
 {
 
@@ -104,7 +104,7 @@ _main(void)
 
 }
 
-int 
+int
 ludcmp( /* int nmax, */ int n, double eps)
 {
 
@@ -156,6 +156,6 @@ void main(void){
 	_main();
 	cycles = TIMER0 - cycles;
 	printf("\nWCET: %d cycles\n", cycles);
-	
+
 }
 

@@ -15,7 +15,7 @@
 
 int32_t cache_init(struct cache_s *cache, int8_t *policy, uint32_t sets, uint32_t block_size, uint32_t ways, uint32_t miss_setup, uint32_t miss_burst){
 	uint32_t i, j, size, mask, bit;
-	
+
 	// skip top cache levels (until cache->next_level == NULL), then proceed.
 	cache->policy = policy;
 	cache->block_size = block_size;
@@ -35,13 +35,13 @@ int32_t cache_init(struct cache_s *cache, int8_t *policy, uint32_t sets, uint32_
 		}
 	}
 	cache->next_level = 0;
-	
+
 	mask = 0;
 	bit = cache->block_size;
 	while (bit >>= 1)
 		mask = (mask << 1) | 1;
 	cache->config.block_mask = mask;
-	
+
 	mask = 0;
 	bit = cache->sets;
 	while (bit >>= 1)
@@ -51,7 +51,7 @@ int32_t cache_init(struct cache_s *cache, int8_t *policy, uint32_t sets, uint32_
 	cache->config.set_shift = 0;
 	while (bit >>= 1)
 		cache->config.set_shift++;
-	
+
 	mask = 0xffffffff;
 	bit = cache->block_size;
 	while (bit >>= 1)
@@ -65,15 +65,15 @@ int32_t cache_init(struct cache_s *cache, int8_t *policy, uint32_t sets, uint32_
 	while (bit >>= 1)
 		cache->config.tag_shift++;
 	cache->config.tag_shift += cache->config.set_shift;
-	
+
 	cache->access.hits = 0;
 	cache->access.misses = 0;
 	cache->access.reads = 0;
 	cache->access.writes = 0;
-	
+
 	/* we assume word size is 32 bits */
 	size = block_size * 4 * sets;
-	
+
 	if (strcmp((const char *)policy, "wt") == 0)
 		printf("write through, no write allocate):\n");
 	if (strcmp((const char *)policy, "wa") == 0)
@@ -90,7 +90,7 @@ int32_t cache_init(struct cache_s *cache, int8_t *policy, uint32_t sets, uint32_
 
 uint32_t cache_read(struct cache_s *cache, uint32_t address){
 	uint32_t tag, set, dirty_penalty = 0;//, block;
-	
+
 	/* we assume word size is 32 bits */
 //	block = (address >> 2) & cache->config.block_mask;
 	set = (address >> cache->config.set_shift >> 2) & cache->config.set_mask;
@@ -130,13 +130,13 @@ uint32_t cache_read(struct cache_s *cache, uint32_t address){
 			return cache->miss_penalty.setup_time + cache->miss_penalty.burst_time;
 		}
 	}
-	
+
 	return 0;
 }
 
 uint32_t cache_write(struct cache_s *cache, uint32_t address){
 	uint32_t tag, set;//, block;
-	
+
 	/* we assume word size is 32 bits */
 //	block = (address >> 2) & cache->config.block_mask;
 	set = (address >> cache->config.set_shift >> 2) & cache->config.set_mask;
@@ -198,7 +198,7 @@ void cache_finish(struct cache_s *cache){
 	printf("\nhit ratio:		%ld%%", (cache->access.hits * 100) / (cache->access.hits + cache->access.misses));
 	printf("\nreads:			%ld", cache->access.reads);
 	printf("\nwrites:			%ld\n", cache->access.writes);
-	
+
 	free(cache->cache_sets->ways);
 	free(cache->cache_sets);
 };

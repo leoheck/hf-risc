@@ -3,7 +3,7 @@
 
 int main(void){
 	uint8_t a, b;
-	
+
 	mcp23s17_init(0, ALL_OUTPUTS, ALL_OUTPUTS);
 	mcp23s17_dir(0, 0, ALL_INPUTS);
 	mcp23s17_dir(0, 1, ALL_INPUTS);
@@ -13,6 +13,6 @@ int main(void){
 	mcp23s17_dir(0, 1, ALL_OUTPUTS);
 	mcp23s17_write(0, 0, 0xff);
 	mcp23s17_write(0, 1, 0xff);
-	
+
 	return 0;
 }

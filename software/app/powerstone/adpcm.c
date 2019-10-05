@@ -173,7 +173,7 @@ int encode(int xin1, int xin2)
   if(eh >= 0)
     {
       ih = 3;
-    } 
+    }
   else
     {
       ih = 1;
@@ -360,7 +360,7 @@ void upzero(int dlt, int *dlti, int *bli)
 	{
 	  bli[i] = (int) ((255L * bli[i]) >> 8L);
 	}
-    } 
+    }
   else
     {
       for (i = 0; i < 6; i++)
@@ -390,7 +390,7 @@ int uppol2(int al1, int al2, int plt, int plt1, int plt2)
   if((long) plt * plt2 >= 0L)
     {
       wd4 = wd2 + 128;
-    } 
+    }
   else
     {
       wd4 = wd2 - 128;
@@ -410,7 +410,7 @@ int uppol1(int al1, int apl2, int plt, int plt1)
   if((long) plt * plt1 >= 0L)
     {
       apl1 = (int) wd2 + 192;
-    } 
+    }
   else
     {
       apl1 = (int) wd2 - 192;
@@ -464,7 +464,7 @@ int main()
   if(xout[1] == 11113 && xout[2] == -11197)
     {
       puts("adpcm: success\n");
-    } 
+    }
   else
     {
       puts("adpcm: failed\n");

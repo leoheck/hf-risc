@@ -13,10 +13,13 @@ use ieee.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
 entity spi_master is
+
 	generic (
 		BYTE_SIZE: integer := 8
 	);
-	port (	-- core interface
+
+	port (
+		-- core interface
 		clk_i: in std_logic;
 		rst_i: in std_logic;
 		data_i: in std_logic_vector(BYTE_SIZE-1 downto 0);	-- parallel data in (clocked on rising spi_clk after last bit)
@@ -28,14 +31,18 @@ entity spi_master is
 		spi_mosi_o: out std_logic;				-- spi bus mosi output
 		spi_miso_i: in std_logic				-- spi bus miso input
 	);
+
 end spi_master;
 
 architecture spi_master_arch of spi_master is
+
 	type states is (idle, data1, clock1, data2, clock2, done);
 	signal state: states;
 	signal data_reg: std_logic_vector(BYTE_SIZE-1 downto 0);
 	signal counter: std_logic_vector(BYTE_SIZE-1 downto 0);
+
 begin
+
 	process(clk_i, rst_i)
 	begin
 		if rst_i = '1' then
